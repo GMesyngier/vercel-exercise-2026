@@ -1,1 +1,62 @@
 @use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 64px;
+  background-color: map-get($theme-colors, "gray-900");
+  border-bottom: 1px solid map-get($theme-colors, "gray-800");
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__wordmark {
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: map-get($text-size, "l");
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.btn-header {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-display;
+  font-weight: 500;
+  font-size: map-get($text-size, "s");
+  color: map-get($theme-colors, "gray-900");
+  background-color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: map-get($theme-colors, "gray-200");
+  }
+}

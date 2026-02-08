@@ -8,7 +8,7 @@ export default function PosterCollection() {
         <div className="collection__header-cell" />
         <div className="collection__header-cell">
           <p className="collection__header-text">
-            And we&apos;re sure you&apos;ll need some for digitals.
+            Make your office <span className="text-hightlighted">look awesome.</span>
           </p>
         </div>
         <div className="collection__header-cell" />

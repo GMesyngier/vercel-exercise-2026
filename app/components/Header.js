@@ -22,6 +22,7 @@ export default function Header() {
             alt="Vercel logo"
             width={91}
             height={18}
+            priority
             style={{ width: "auto", height: "auto" }}
           />
           <p className="site-header__legend">Go tell your friends!</p>

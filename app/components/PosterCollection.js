@@ -15,13 +15,14 @@ export default function PosterCollection() {
       </div>
 
       <div className="collection__grid">
-        {collections.posters.map((poster) => (
+        {collections.posters.map((poster, index) => (
           <div key={poster.name} className="collection__item">
             <PosterCard
               title={poster.name}
               category={poster.category}
               image={poster["thumb-url"]}
               downloadUrl={poster["download-url"]}
+              priority={index < 4}
             />
           </div>
         ))}

@@ -16,7 +16,7 @@ function ShareIcon() {
   );
 }
 
-export default function PosterCard({ title, category, image, downloadUrl, landscape }) {
+export default function PosterCard({ title, category, image, downloadUrl, landscape, priority = false }) {
   return (
     <article className="poster-card">
       <div className={`poster-card__thumbnail${landscape ? " poster-card__thumbnail--landscape" : ""}`}>
@@ -24,7 +24,9 @@ export default function PosterCard({ title, category, image, downloadUrl, landsc
           src={image}
           alt={title}
           width={360}
-          height={480}
+          height={landscape ? 270 : 480}
+          loading={priority ? "eager" : "lazy"}
+          priority={priority}
           style={{ width: "100%", height: "100%" }}
         />
       </div>

@@ -1,22 +1,5 @@
 import PosterCard from "./PosterCard";
-
-const posters = [
-  {
-    title: "Deploy Poster",
-    category: "Wall Art",
-    image: "/images/poster-1.jpg",
-  },
-  {
-    title: "Build Poster",
-    category: "Wall Art",
-    image: "/images/poster-2.jpg",
-  },
-  {
-    title: "Ship Poster",
-    category: "Wall Art",
-    image: "/images/poster-3.jpg",
-  },
-];
+import collections from "../../data/collections.json";
 
 export default function PosterCollection() {
   return (
@@ -32,12 +15,13 @@ export default function PosterCollection() {
       </div>
 
       <div className="collection__grid">
-        {posters.map((poster) => (
-          <div key={poster.title} className="collection__item">
+        {collections.posters.map((poster) => (
+          <div key={poster.name} className="collection__item">
             <PosterCard
-              title={poster.title}
+              title={poster.name}
               category={poster.category}
-              image={poster.image}
+              image={poster["thumb-url"]}
+              downloadUrl={poster["download-url"]}
             />
           </div>
         ))}

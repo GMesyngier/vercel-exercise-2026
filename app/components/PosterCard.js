@@ -16,7 +16,7 @@ function ShareIcon() {
   );
 }
 
-export default function PosterCard({ title, category, image }) {
+export default function PosterCard({ title, category, image, downloadUrl }) {
   return (
     <article className="poster-card">
       <div className="poster-card__thumbnail">
@@ -34,9 +34,9 @@ export default function PosterCard({ title, category, image }) {
           <span className="poster-card__category">{category}</span>
         </div>
         <div className="poster-card__actions">
-          <button className="icon-btn" aria-label={`Download ${title}`}>
+          <a href={downloadUrl} download className="icon-btn" aria-label={`Download ${title}`}>
             <DownloadIcon />
-          </button>
+          </a>
           <button className="icon-btn" aria-label={`Share ${title}`}>
             <ShareIcon />
           </button>

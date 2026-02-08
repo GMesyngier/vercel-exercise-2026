@@ -1,1 +1,31 @@
 @use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+.collection {
+  border-top: 1px solid map-get($theme-colors, "gray-dark");
+
+  &__header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &__header-cell {
+    padding: map-get($spacing, "m") 0;
+    border-right: 1px solid map-get($theme-colors, "gray-dark");
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__header-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-family: $font-text;
+    font-size: map-get($text-size, "m");
+    color: map-get($theme-colors, "gray-light");
+    text-align: center;
+  }
+}

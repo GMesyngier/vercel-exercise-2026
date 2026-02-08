@@ -1,5 +1,6 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import PosterCollection from "./components/PosterCollection";
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
       <Header />
       <main className="section-container">
         <Hero />
+        <PosterCollection />
       </main>
     </div>
   );

@@ -1,8 +1,10 @@
 @use '../utils/variables' as *;
 @use '../utils/mixins' as *;
 
-body {
-  background-color: black;
+html,
+body,
+.page {
+  background: #000000;
   color: #fff;
   font-family: $font-text;
   -webkit-font-smoothing: antialiased;

@@ -2,7 +2,7 @@
 @use '../utils/mixins' as *;
 
 .section-container {
-  max-width: 1080px;
+  max-width: 1078px;
   margin: 0 auto;
-  padding: 0 24px;
+  border: 1px solid map-get($theme-colors, 'gray-dark')
 }

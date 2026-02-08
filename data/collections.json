@@ -1,82 +1,82 @@
 {
   "posters": [
     {
-      "name": "Babel",
-      "category": "Poster",
-      "download-url": "/collections/posters/babel.png",
-      "thumb-url": "/collections/posters/thumbs/babel.png"
-    },
-    {
-      "name": "Brital Collage",
+      "name": "Geist: Brital Collage",
       "category": "Poster",
       "download-url": "/collections/posters/brital-collage.png",
       "thumb-url": "/collections/posters/thumbs/brital-collage.png"
     },
     {
-      "name": "Brutalism",
-      "category": "Poster",
-      "download-url": "/collections/posters/brutalism.png",
-      "thumb-url": "/collections/posters/thumbs/brutalism.png"
-    },
-    {
-      "name": "Falls",
-      "category": "Poster",
-      "download-url": "/collections/posters/falls.png",
-      "thumb-url": "/collections/posters/thumbs/falls.png"
-    },
-    {
-      "name": "Geisconographic Black",
-      "category": "Poster",
-      "download-url": "/collections/posters/geisconographic-black.png",
-      "thumb-url": "/collections/posters/thumbs/geisconographic-black.png"
-    },
-    {
-      "name": "Geisconographic Gray",
-      "category": "Poster",
-      "download-url": "/collections/posters/geisconographic-gray.png",
-      "thumb-url": "/collections/posters/thumbs/geisconographic-gray.png"
-    },
-    {
-      "name": "Good Design",
+      "name": "Geist: Good Design",
       "category": "Poster",
       "download-url": "/collections/posters/good-design.png",
       "thumb-url": "/collections/posters/thumbs/good-design.png"
     },
     {
-      "name": "Gradient",
+      "name": "Geist: Brutalism",
+      "category": "Poster",
+      "download-url": "/collections/posters/brutalism.png",
+      "thumb-url": "/collections/posters/thumbs/brutalism.png"
+    },
+    {
+      "name": "Geist: Geisconographic Black",
+      "category": "Poster",
+      "download-url": "/collections/posters/geisconographic-black.png",
+      "thumb-url": "/collections/posters/thumbs/geisconographic-black.png"
+    },
+    {
+      "name": "Geist: Geisconographic Gray",
+      "category": "Poster",
+      "download-url": "/collections/posters/geisconographic-gray.png",
+      "thumb-url": "/collections/posters/thumbs/geisconographic-gray.png"
+    },
+    {
+      "name": "Geist: Gradient",
       "category": "Poster",
       "download-url": "/collections/posters/gradient.png",
       "thumb-url": "/collections/posters/thumbs/gradient.png"
     },
     {
-      "name": "Grids",
+      "name": "Geist: Grids",
       "category": "Poster",
       "download-url": "/collections/posters/grids.png",
       "thumb-url": "/collections/posters/thumbs/grids.png"
     },
     {
-      "name": "Guides",
+      "name": "Geist: Guides",
       "category": "Poster",
       "download-url": "/collections/posters/guides.png",
       "thumb-url": "/collections/posters/thumbs/guides.png"
     },
     {
-      "name": "Illuminate",
-      "category": "Poster",
-      "download-url": "/collections/posters/illuminate.png",
-      "thumb-url": "/collections/posters/thumbs/illuminate.png"
-    },
-    {
-      "name": "Layer",
+      "name": "Geist: Layer",
       "category": "Poster",
       "download-url": "/collections/posters/layer.png",
       "thumb-url": "/collections/posters/thumbs/layer.png"
     },
     {
-      "name": "Tech Collage",
+      "name": "Geist: Tech Collage",
       "category": "Poster",
       "download-url": "/collections/posters/tech-collage.png",
       "thumb-url": "/collections/posters/thumbs/tech-collage.png"
+    },
+    {
+      "name": "AI: Babel",
+      "category": "Poster",
+      "download-url": "/collections/posters/babel.png",
+      "thumb-url": "/collections/posters/thumbs/babel.png"
+    },
+    {
+      "name": "AI: Illuminate",
+      "category": "Poster",
+      "download-url": "/collections/posters/illuminate.png",
+      "thumb-url": "/collections/posters/thumbs/illuminate.png"
+    },
+    {
+      "name": "AI: Falls",
+      "category": "Poster",
+      "download-url": "/collections/posters/falls.png",
+      "thumb-url": "/collections/posters/thumbs/falls.png"
     }
   ],
   "backgrounds": [

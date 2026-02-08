@@ -1,0 +1,45 @@
+@keyframes float-smooth {
+
+   0% {
+     margin-top: 0px;
+   }
+
+   50% {
+     margin-top: -5px;
+   }
+
+   100% {
+       margin-top: 0px;
+   }
+ }
+
+ @keyframes reveal-hero {
+
+   from {
+     opacity: 0;
+     margin-top: 10px;
+      perspective: 650px;
+   }
+
+   to {
+     opacity: 1;
+     margin-top: 0px;
+    perspective: 850px;
+   }
+ }
+
+ @keyframes quara-shadow {
+
+   0% {
+     scale: 1;
+     transform: translateX(-50%) scale(1) ;
+   }
+
+   50% {
+     transform: translateX(-50%) scale(.95);
+   }
+
+   100% {  
+     transform: translateX(-50%) scale(1) ;
+   }
+ }

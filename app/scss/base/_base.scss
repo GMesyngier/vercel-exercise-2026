@@ -1,9 +1,8 @@
-
 @use '../utils/variables' as *;
 @use '../utils/mixins' as *;
 
 body {
-  background-color: map-get($theme-colors, "gray-900");
+  background-color: black;
   color: #fff;
   font-family: $font-text;
   -webkit-font-smoothing: antialiased;

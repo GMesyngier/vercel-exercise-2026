@@ -1,3 +1,63 @@
 
 @use '../utils/variables' as *;
 @use '../utils/animations' as *;
+@use '../utils/mixins' as *;
+
+.hero {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+
+  &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+  }
+
+  &__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: map-get($spacing, "m");
+  }
+
+  &__tagline {
+    font-family: $font-display;
+    font-weight: 700;
+    font-size: map-get($title-size, "l");
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: map-get($spacing, "xs");
+
+    @include breakpoint("mobile") {
+      font-size: map-get($title-size, "l");
+    }
+  }
+
+  &__description {
+    font-family: $font-text;
+    font-weight: 400;
+    font-size: map-get($text-size, "l");
+    color: map-get($theme-colors, "gray-light");
+    letter-spacing: -0.01em;
+  }
+}

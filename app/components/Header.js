@@ -8,17 +8,17 @@ export default function Header() {
       <div className="site-header__inner">
         <div className="site-header__logo">
           <Image
-            src="/vercel.svg"
+            src="header/vercel-logo.svg"
             alt="Vercel logo"
-            width={22}
-            height={19}
+            width={91}
+            height={18}
             style={{ width: "auto", height: "auto" }}
           />
-          <span className="site-header__wordmark">Vercel</span>
+          <p className="site-header__legend">Go tell your friends!</p>
         </div>
         <div className="site-header__actions">
           <a href="#" className="btn-header">
-            Sign Up
+            Buy Our Merch Now!
           </a>
         </div>
       </div>

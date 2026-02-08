@@ -1,34 +1,17 @@
-
 // Colors
 
 $theme-colors: (
-  "a-blue": #0439D7,
-  "a-red": #FF433D,
-  "gray-light": #F7F7F7,
-  "gray-silver": #D9D9D9,
-  "gray-carbon": #262626,
-  "gray-dark": #080808,
-  "a-magent": #E91FEA,
-  "a-cyan": #21E9EA,
-  "a-yellow": #E9E92B,
-  "a-green": #67FF78,
-  "gray-100": #F7F7F7,
-  "gray-200": #D9D9D9,
-  "gray-300": #BBBBBB,
-  "gray-400": #9D9D9D,
-  "gray-500": #808080,
-  "gray-600": #626262,
-  "gray-700": #444444,
-  "gray-800": #262626,
-  "gray-900": #080808,
+  "gray-light": #a1a1a1,
+  "gray-carbon": #666666,
+  "gray-dark": #1f1f1f,
 );
 
 
 // Font Families
 
-$font-display: "Inter Tight", sans-serif;
-$font-text: "Inter", sans-serif;
-$font-mono: "Roboto Mono", monospace;
+$font-display: "Geist", sans-serif;
+$font-text: "Geist", sans-serif;
+$font-mono: "Geist Mono", monospace;
 
 
 // Font Sizes
@@ -70,28 +53,3 @@ $viewport: (
   "tablet": 767px,
   "desktop": 1024px,
 );
-
-
-// radius
-
-$border-radius: (
-  "s": 4px,
-  "m": 8px,
-  "l": 12px,
-);
-
-
-// Blog Slider 
-
-$blog-slide-width: (
-  "desktop": 850px,
-  "tablet": 720px,
-  "mobile": 286px
-);
-
-$blog-post-image-size: (
-
-  "desktop": 375px,
-  "tablet": 300px,
-  "mobile": 270px
-)

@@ -1,1 +1,27 @@
 @use "../utils/variables" as *;
+
+.site-footer {
+  max-width: 1078px;
+  margin: 0 auto;
+  border: 1px solid map-get($theme-colors, "gray-dark");
+  border-top: none;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: map-get($spacing, "xs");
+  }
+
+  &__copy {
+    font-family: $font-text;
+    font-size: map-get($text-size, "s");
+    color: map-get($theme-colors, "gray-carbon");
+  }
+
+  &__logo {
+    width: 16px;
+    height: auto;
+    color: map-get($theme-colors, "gray-carbon");
+  }
+}

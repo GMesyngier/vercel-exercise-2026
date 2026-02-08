@@ -1,1 +1,139 @@
 @use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+.collection {
+  border-top: 1px solid map-get($theme-colors, "gray-dark");
+
+  &__header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    position: relative;
+    height: 160px;
+  }
+
+  &__header-cell {
+    padding: map-get($spacing, "m") 0;
+    border-right: 1px solid map-get($theme-colors, "gray-dark");
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__header-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-family: $font-text;
+    font-weight: 500;
+    font-size: 2rem;
+    color: map-get($theme-colors, "gray-light");
+    text-align: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  // Grid of items
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // Individual grid item
+  &__item {
+    border-right: 1px solid map-get($theme-colors, "gray-dark");
+    border-top: 1px solid map-get($theme-colors, "gray-dark");
+
+    &:nth-child(3n) {
+      border-right: none;
+    }
+  }
+}
+
+// Poster card
+.poster-card {
+  display: flex;
+  flex-direction: column;
+  padding: map-get($spacing, "m");
+
+  &__thumbnail {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+
+    &--landscape {
+      aspect-ratio: 16 / 9;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: map-get($spacing, "xs");
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__title {
+    font-family: $font-text;
+    font-weight: 500;
+    font-size: map-get($text-size, "s");
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  &__category {
+    font-family: $font-text;
+    font-weight: 400;
+    font-size: map-get($text-size, "s");
+    color: map-get($theme-colors, "gray-carbon");
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+}
+
+// Icon button (reusable)
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid map-get($theme-colors, "gray-dark");
+  border-radius: 8px;
+  background: transparent;
+  color: map-get($theme-colors, "gray-light");
+  cursor: pointer;
+  @include transition(background 0.15s ease, color 0.15s ease);
+
+  &:hover {
+    background: map-get($theme-colors, "gray-dark");
+    color: #fff;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}

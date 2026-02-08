@@ -1,1 +1,8 @@
 @use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+.section-container {
+  max-width: 1078px;
+  margin: 0 auto;
+  border: 1px solid map-get($theme-colors, 'gray-dark')
+}

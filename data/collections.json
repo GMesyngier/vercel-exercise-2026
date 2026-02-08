@@ -1,0 +1,120 @@
+{
+  "posters": [
+    {
+      "name": "Babel",
+      "category": "Poster",
+      "download-url": "/collections/posters/babel.png",
+      "thumb-url": "/collections/posters/thumbs/babel.png"
+    },
+    {
+      "name": "Brital Collage",
+      "category": "Poster",
+      "download-url": "/collections/posters/brital-collage.png",
+      "thumb-url": "/collections/posters/thumbs/brital-collage.png"
+    },
+    {
+      "name": "Brutalism",
+      "category": "Poster",
+      "download-url": "/collections/posters/brutalism.png",
+      "thumb-url": "/collections/posters/thumbs/brutalism.png"
+    },
+    {
+      "name": "Falls",
+      "category": "Poster",
+      "download-url": "/collections/posters/falls.png",
+      "thumb-url": "/collections/posters/thumbs/falls.png"
+    },
+    {
+      "name": "Geisconographic Black",
+      "category": "Poster",
+      "download-url": "/collections/posters/geisconographic-black.png",
+      "thumb-url": "/collections/posters/thumbs/geisconographic-black.png"
+    },
+    {
+      "name": "Geisconographic Gray",
+      "category": "Poster",
+      "download-url": "/collections/posters/geisconographic-gray.png",
+      "thumb-url": "/collections/posters/thumbs/geisconographic-gray.png"
+    },
+    {
+      "name": "Good Design",
+      "category": "Poster",
+      "download-url": "/collections/posters/good-design.png",
+      "thumb-url": "/collections/posters/thumbs/good-design.png"
+    },
+    {
+      "name": "Gradient",
+      "category": "Poster",
+      "download-url": "/collections/posters/gradient.png",
+      "thumb-url": "/collections/posters/thumbs/gradient.png"
+    },
+    {
+      "name": "Grids",
+      "category": "Poster",
+      "download-url": "/collections/posters/grids.png",
+      "thumb-url": "/collections/posters/thumbs/grids.png"
+    },
+    {
+      "name": "Guides",
+      "category": "Poster",
+      "download-url": "/collections/posters/guides.png",
+      "thumb-url": "/collections/posters/thumbs/guides.png"
+    },
+    {
+      "name": "Illuminate",
+      "category": "Poster",
+      "download-url": "/collections/posters/illuminate.png",
+      "thumb-url": "/collections/posters/thumbs/illuminate.png"
+    },
+    {
+      "name": "Layer",
+      "category": "Poster",
+      "download-url": "/collections/posters/layer.png",
+      "thumb-url": "/collections/posters/thumbs/layer.png"
+    },
+    {
+      "name": "Tech Collage",
+      "category": "Poster",
+      "download-url": "/collections/posters/tech-collage.png",
+      "thumb-url": "/collections/posters/thumbs/tech-collage.png"
+    }
+  ],
+  "backgrounds": [
+    {
+      "name": "Adjusment Signal",
+      "category": "Background",
+      "download-url": "/collections/backgrounds/adjusment-signal.png",
+      "thumb-url": "/collections/backgrounds/thumbs/adjusment-signal.png"
+    },
+    {
+      "name": "Disco Grids",
+      "category": "Background",
+      "download-url": "/collections/backgrounds/disco-grids.png",
+      "thumb-url": "/collections/backgrounds/thumbs/disco-grids.png"
+    },
+    {
+      "name": "Miro",
+      "category": "Background",
+      "download-url": "/collections/backgrounds/miro.png",
+      "thumb-url": "/collections/backgrounds/thumbs/miro.png"
+    },
+    {
+      "name": "Punk",
+      "category": "Background",
+      "download-url": "/collections/backgrounds/punk.png",
+      "thumb-url": "/collections/backgrounds/thumbs/punk.png"
+    },
+    {
+      "name": "Raw Diamond",
+      "category": "Background",
+      "download-url": "/collections/backgrounds/raw-diamond.png",
+      "thumb-url": "/collections/backgrounds/thumbs/raw-diamond.png"
+    },
+    {
+      "name": "Rise",
+      "category": "Background",
+      "download-url": "/collections/backgrounds/rise.png",
+      "thumb-url": "/collections/backgrounds/thumbs/rise.png"
+    }
+  ]
+}

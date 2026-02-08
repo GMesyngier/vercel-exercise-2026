@@ -1,3 +1,16 @@
-
 @use '../utils/variables' as *;
 @use '../utils/mixins' as *;
+
+html,
+body,
+.page {
+  background: #000000;
+  color: #fff;
+  font-family: $font-text;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.text-hightlighted {
+  color: white;
+}

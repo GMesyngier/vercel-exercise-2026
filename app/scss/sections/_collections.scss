@@ -6,10 +6,18 @@
 
   &__header {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     position: relative;
     height: 160px;
     border-bottom: 1px solid map-get($theme-colors, "gray-dark");
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   &__header-cell {
@@ -41,16 +49,41 @@
   // Grid of items
   &__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   // Individual grid item
   &__item {
-    border-right: 1px solid map-get($theme-colors, "gray-dark");
     border-bottom: 1px solid map-get($theme-colors, "gray-dark");
 
-    &:nth-child(3n) {
-      border-right: none;
+    // 2-col layout (tablet)
+    @media (min-width: map-get($viewport, "tablet")) {
+      border-right: 1px solid map-get($theme-colors, "gray-dark");
+
+      &:nth-child(2n) {
+        border-right: none;
+      }
+    }
+
+    // 3-col layout (desktop)
+    @media (min-width: map-get($viewport, "desktop")) {
+      border-right: 1px solid map-get($theme-colors, "gray-dark");
+
+      &:nth-child(2n) {
+        border-right: 1px solid map-get($theme-colors, "gray-dark");
+      }
+
+      &:nth-child(3n) {
+        border-right: none;
+      }
     }
   }
 }

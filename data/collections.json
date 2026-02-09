@@ -1,9 +1,9 @@
 {
   "posters": [
     {
-      "name": "Geist: Brital Collage",
+      "name": "Geist: Brutal Collage",
       "category": "Poster",
-      "download-url": "/collections/posters/brutal-collage.png",
+      "download-url": "/collections/posters/brital-collage.png",
       "thumb-url": "/collections/posters/thumbs/brital-collage.png"
     },
     {
@@ -19,13 +19,13 @@
       "thumb-url": "/collections/posters/thumbs/brutalism.png"
     },
     {
-      "name": "Geist: Geisconographic Black",
+      "name": "Geist: Geistconographic Black",
       "category": "Poster",
       "download-url": "/collections/posters/geistconographic-black.png",
       "thumb-url": "/collections/posters/thumbs/geisconographic-black.png"
     },
     {
-      "name": "Geist: Geisconographic Gray",
+      "name": "Geist: Geistconographic Gray",
       "category": "Poster",
       "download-url": "/collections/posters/geistconographic-gray.png",
       "thumb-url": "/collections/posters/thumbs/geisconographic-gray.png"
@@ -83,7 +83,7 @@
     {
       "name": "Adjusment Signal",
       "category": "Background",
-      "download-url": "/collections/backgrounds/adjustment-signal.png",
+      "download-url": "/collections/backgrounds/adjusment-signal.png",
       "thumb-url": "/collections/backgrounds/thumbs/adjusment-signal.png"
     },
     {

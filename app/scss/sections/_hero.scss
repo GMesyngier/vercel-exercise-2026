@@ -26,32 +26,43 @@
     display: block;
     position: absolute;
     inset: 0;
-    bottom: 175px;
+    bottom: 25%;
     top: auto;
     left: 0;
     right: 0;
     text-align: center;
+
+    @media (min-width:map-get($viewport, "desktop")) {
+      bottom: 175px;
+    }
   }
 
   &__tagline {
     font-family: $font-display;
     font-weight: 600;
-    font-size: map-get($title-size, "l");
+    font-size: map-get($title-size, "s");
     color: #fff;
     letter-spacing: -0.03em;
     line-height: 1.1;
-    margin-bottom: map-get($spacing, "s");
+    margin-bottom: 0.765rem;
 
-    @include breakpoint("mobile") {
+    @media (min-width:map-get($viewport, "tablet")) {
       font-size: map-get($title-size, "m");
+      margin-bottom: map-get($spacing, "s");
     }
   }
 
   &__description {
     font-family: $font-text;
     font-weight: 400;
-    font-size: map-get($text-size, "l");
+    font-size: map-get($text-size, "m");
     color: map-get($theme-colors, "gray-light");
     letter-spacing: -0.01em;
+    display: none;
+
+    @media (min-width:map-get($viewport, "tablet")) {
+      font-size: map-get($text-size, "l");
+      display: block;
+    }
   }
 }

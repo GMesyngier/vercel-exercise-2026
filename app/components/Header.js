@@ -28,7 +28,7 @@ export default function Header() {
         </div>
         <div className="site-header__actions">
           <a href="#" className="btn-header">
-            Buy Our Merch Now!
+            Buy Merch Now!
           </a>
         </div>
       </div>

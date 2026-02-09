@@ -29,7 +29,11 @@
   &__logo {
     display: flex;
     align-items: center;
-    gap: map-get($spacing, "m");
+    gap: map-get($spacing, "xs");
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      gap: map-get($spacing, "m");
+    }
   }
 
   &__legend {

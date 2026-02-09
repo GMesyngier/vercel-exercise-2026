@@ -9,7 +9,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: map-get($spacing, "m") 0;
+    padding: map-get($spacing, "m") map-get($spacing, "s");
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      padding: map-get($spacing, "m") 0;
+    }
+
   }
 
   &__copy {

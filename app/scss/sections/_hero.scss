@@ -5,7 +5,6 @@
 .hero {
   position: relative;
   width: 100%;
-  overflow: hidden;
   aspect-ratio: 16 / 9;
   border-bottom: 1px solid map-get($theme-colors, "gray-dark");
 

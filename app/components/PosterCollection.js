@@ -1,5 +1,6 @@
 import PosterCard from "./PosterCard";
 import collections from "../../data/collections.json";
+import Cross from "./Cross";
 
 export default function PosterCollection() {
   return (
@@ -26,6 +27,9 @@ export default function PosterCollection() {
             />
           </div>
         ))}
+
+      <Cross pos="cross-start" />
+      <Cross pos="cross-end" />
       </div>
     </section>
   );

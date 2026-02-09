@@ -1,5 +1,6 @@
 import PosterCard from "./PosterCard";
 import collections from "../../data/collections.json";
+import Cross from "./Cross";
 
 export default function BackgroundCollection() {
   return (
@@ -8,7 +9,7 @@ export default function BackgroundCollection() {
         <div className="collection__header-cell" />
         <div className="collection__header-cell">
           <p className="collection__header-text">
-            And we&apos;re sure you&apos;ll need some&nbsp; <span className="text-highlighted">for digitals</span> .
+            For sure you&apos;ll need some&nbsp; <span className="text-highlighted">for digitals</span> .
           </p>
         </div>
         <div className="collection__header-cell" />
@@ -26,6 +27,9 @@ export default function BackgroundCollection() {
             />
           </div>
         ))}
+
+        <Cross pos="cross-start" />
+        <Cross pos="cross-end" />
       </div>
     </section>
   );

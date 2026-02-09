@@ -1,6 +1,9 @@
+import Cross from "./Cross";
 export default function Hero() {
   return (
     <section className="hero">
+      <Cross pos="cross-start" />
+      <Cross pos="cross-end" />
       <video
         className="hero__video"
         autoPlay

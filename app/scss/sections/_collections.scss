@@ -38,7 +38,6 @@
   align-items: center;
   width: 100%;
   max-width: 540px;
-  animation: card-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .gallery__card {
@@ -71,6 +70,7 @@
   justify-content: space-between;
   width: 100%;
   padding: map-get($spacing, "xs") 0 0;
+  animation: card-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .gallery__card-meta {

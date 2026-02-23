@@ -64,7 +64,7 @@ export default function Gallery() {
   return (
     <section className="gallery">
       {/* Featured card area */}
-      <div className="gallery__card-area" key={activeIndex}>
+      <div className="gallery__card-area">
         <div
           className="gallery__card"
           ref={cardRef}
@@ -82,8 +82,8 @@ export default function Gallery() {
           </div>
         </div>
 
-        {/* Info row below card */}
-        <div className="gallery__card-info">
+        {/* Info row below card - keyed for subtle text fade */}
+        <div className="gallery__card-info" key={activeIndex}>
           <div className="gallery__card-meta">
             <h2 className="gallery__card-title">{current.name}</h2>
             <span className="gallery__card-category">{current.category}</span>

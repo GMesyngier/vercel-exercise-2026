@@ -1,54 +1,43 @@
 @use '../utils/variables' as *;
 @use '../utils/mixins' as *;
+@use '../utils/animations' as *;
 
 .collection {
-  border-top: 1px solid map-get($theme-colors, "gray-dark");
+  border-top: none;
+  padding-top: map-get($spacing, "m");
 
   &__header {
-    display: grid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
-    height: 120px;
-    border-bottom: 1px solid map-get($theme-colors, "gray-dark");
-    
+    padding: map-get($spacing, "l") 0;
 
     @media (min-width: map-get($viewport, "tablet")) {
-      height: 160px;
+      padding: map-get($spacing, "xl") 0;
     }
   }
 
   &__header-cell {
-    padding: map-get($spacing, "m") 0;
-    border-right: 1px solid map-get($theme-colors, "gray-dark");
-    height: 160px;
-
-    &:last-child {
-      border-right: none;
-    }
+    display: none;
   }
 
   &__header-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-family: $font-text;
-    font-weight: 500;
-    font-size: 1.125rem;
-    color: map-get($theme-colors, "gray-light");
+    font-family: $font-display;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: map-get($theme-colors, "text-primary");
     text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    white-space: nowrap;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    text-wrap: balance;
 
     @media (min-width: map-get($viewport, "tablet")) {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
     }
 
     @media (min-width: map-get($viewport, "desktop")) {
-      font-size: 2rem;
+      font-size: 2.25rem;
     }
   }
 
@@ -56,6 +45,7 @@
   &__grid {
     display: grid;
     grid-template-columns: 1fr;
+    gap: 24px;
     position: relative;
 
     @media (min-width: map-get($viewport, "tablet")) {
@@ -69,28 +59,21 @@
 
   // Individual grid item
   &__item {
-    border-bottom: 1px solid map-get($theme-colors, "gray-dark");
+    border-bottom: none;
+    animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 
-    // 2-col layout (tablet)
-    @media (min-width: map-get($viewport, "tablet")) {
-      border-right: 1px solid map-get($theme-colors, "gray-dark");
-
-      &:nth-child(2n) {
-        border-right: none;
+    @for $i from 1 through 15 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.06}s;
       }
     }
 
-    // 3-col layout (desktop)
+    @media (min-width: map-get($viewport, "tablet")) {
+      border-right: none;
+    }
+
     @media (min-width: map-get($viewport, "desktop")) {
-      border-right: 1px solid map-get($theme-colors, "gray-dark");
-
-      &:nth-child(2n) {
-        border-right: 1px solid map-get($theme-colors, "gray-dark");
-      }
-
-      &:nth-child(3n) {
-        border-right: none;
-      }
+      border-right: none;
     }
   }
 }
@@ -99,19 +82,31 @@
 .poster-card {
   display: flex;
   flex-direction: column;
-  padding: map-get($spacing, "m");
-  background: rgba(#0a0a0a, 0);
-  transition: background .2s ease-in-out;
+  padding: 0;
+  background: map-get($theme-colors, "bg-card");
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid map-get($theme-colors, "border-light");
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
   height: 100%;
 
   &:hover {
-    background: rgba(#0a0a0a, 1);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
+    border-color: map-get($theme-colors, "border");
+
+    .poster-card__thumbnail img {
+      transform: scale(1.03);
+    }
   }
 
   &__thumbnail {
     width: 100%;
     aspect-ratio: 3 / 4;
     overflow: hidden;
+    background: map-get($theme-colors, "bg-elevated");
 
     &--landscape {
       aspect-ratio: 16 / 9;
@@ -122,6 +117,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
   }
 
@@ -129,10 +125,10 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    padding: map-get($spacing, "xs") 0 0;
+    padding: map-get($spacing, "xs");
 
     @media (min-width: map-get($viewport, "tablet")) {
-      padding: map-get($spacing, "s") 0 0;
+      padding: 1.25rem;
     }
   }
 
@@ -144,9 +140,9 @@
 
   &__title {
     font-family: $font-text;
-    font-weight: 500;
+    font-weight: 600;
     font-size: map-get($text-size, "m");
-    color: #fff;
+    color: map-get($theme-colors, "text-primary");
     line-height: 1.4;
   }
 
@@ -154,13 +150,13 @@
     font-family: $font-mono;
     font-weight: 400;
     font-size: map-get($text-size, "s");
-    color: map-get($theme-colors, "gray-carbon");
+    color: map-get($theme-colors, "text-muted");
   }
 
   &__actions {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     flex-shrink: 0;
   }
 }
@@ -172,16 +168,17 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid map-get($theme-colors, "gray-dark");
-  border-radius: 8px;
+  border: 1px solid map-get($theme-colors, "border");
+  border-radius: 10px;
   background: transparent;
-  color: map-get($theme-colors, "gray-light");
+  color: map-get($theme-colors, "text-secondary");
   cursor: pointer;
-  @include transition(background 0.15s ease, color 0.15s ease);
+  @include transition(background 0.2s ease, color 0.2s ease, border-color 0.2s ease);
 
   &:hover {
-    background: map-get($theme-colors, "gray-dark");
-    color: #fff;
+    background: map-get($theme-colors, "bg-elevated");
+    color: map-get($theme-colors, "accent");
+    border-color: map-get($theme-colors, "accent");
   }
 
   svg {

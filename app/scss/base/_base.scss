@@ -3,16 +3,17 @@
 
 html,
 body {
-  background: #000000;
-  color: #fff;
+  background: map-get($theme-colors, "bg");
+  color: map-get($theme-colors, "text-primary");
   font-family: $font-text;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @include scrollbars(6px, white, map-get($theme-colors, gray-dark));
+  @include scrollbars(6px, map-get($theme-colors, "text-muted"), map-get($theme-colors, "border-light"));
 }
 
 .text-highlighted {
-  color: white;
+  color: map-get($theme-colors, "accent");
 }
 
 .cross {

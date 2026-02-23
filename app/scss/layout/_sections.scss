@@ -1,8 +1,8 @@
 @use '../utils/variables' as *;
 
 .section {
-  margin-top: map-get($spacing , "xs");
-  border-bottom: 1px solid map-get($theme-colors, "gray-dark");
+  margin-top: map-get($spacing, "s");
+  border-bottom: 1px solid map-get($theme-colors, "border");
 
   &:last-child {
     border-bottom: none;

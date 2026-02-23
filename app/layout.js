@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Amazing just like Vercel.",
-  description: "A collection for development fans.",
+  title: "Vercel Graphic Collection",
+  description: "A curated collection of posters and backgrounds for development fans.",
 };
 
 export default function RootLayout({ children }) {

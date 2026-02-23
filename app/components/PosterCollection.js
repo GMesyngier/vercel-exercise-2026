@@ -1,18 +1,13 @@
 import PosterCard from "./PosterCard";
 import collections from "../../data/collections.json";
-import Cross from "./Cross";
 
 export default function PosterCollection() {
   return (
     <section className="section collection">
       <div className="collection__header">
-        <div className="collection__header-cell" />
-        <div className="collection__header-cell">
-          <p className="collection__header-text">
-            Make your office <span className="text-highlighted">&nbsp;look awesome.</span>
-          </p>
-        </div>
-        <div className="collection__header-cell" />
+        <p className="collection__header-text">
+          Make your office <span className="text-highlighted">&nbsp;look awesome.</span>
+        </p>
       </div>
 
       <div className="collection__grid">
@@ -27,9 +22,6 @@ export default function PosterCollection() {
             />
           </div>
         ))}
-
-      <Cross pos="cross-start" />
-      <Cross pos="cross-end" />
       </div>
     </section>
   );

@@ -2,9 +2,9 @@
 @use '../utils/mixins' as *;
 
 .section-container {
-  max-width: 1078px;
+  max-width: 1200px;
   margin: 0 1.25rem;
-  border: 1px solid map-get($theme-colors, 'gray-dark');
+  border: none;
 
   @media (min-width: map-get($viewport, "desktop")) {
     margin: 0 auto;

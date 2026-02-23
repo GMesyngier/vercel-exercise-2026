@@ -1,9 +1,16 @@
-// Colors
+// Colors — Light editorial palette
 
 $theme-colors: (
-  "gray-light": #a1a1a1,
-  "gray-carbon": #666666,
-  "gray-dark": #1f1f1f,
+  "bg": #faf9f7,
+  "bg-card": #ffffff,
+  "bg-elevated": #f3f1ed,
+  "text-primary": #1a1a1a,
+  "text-secondary": #6b6b6b,
+  "text-muted": #9a9a9a,
+  "border": #e4e0da,
+  "border-light": #ece9e3,
+  "accent": #c8553d,
+  "accent-hover": #b0462f,
 );
 
 
@@ -22,7 +29,8 @@ $title-size: (
   "s" : 1.625rem,
   "m-s" : 2.5rem,
   "m" : 3rem,
-  "l" : 3.75rem
+  "l" : 3.75rem,
+  "xl" : 4.5rem,
 );
 
 $text-size: (
@@ -34,7 +42,7 @@ $text-size: (
 );
 
 
-// Spacing: Matgins & Paddings
+// Spacing
 
 $spacing: (
   "xs" : 1rem,

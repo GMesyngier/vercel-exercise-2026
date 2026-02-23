@@ -7,30 +7,23 @@
   overflow: hidden;
   cursor: default;
   user-select: none;
-  perspective: 600px;
-
-  &__belt {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    transform: rotateX(28deg);
-    transform-origin: center center;
-    padding: 16px 0;
-
-    @media (min-width: map-get($viewport, "tablet")) {
-      transform: rotateX(32deg);
-      gap: 4px;
-      padding: 20px 0;
-    }
-  }
 
   &__row {
     display: flex;
+    align-items: flex-end;
     gap: 0;
     overflow: hidden;
-    white-space: nowrap;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    height: 180px;
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      height: 220px;
+    }
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      height: 260px;
+    }
 
     &::-webkit-scrollbar {
       display: none;
@@ -39,42 +32,44 @@
 
   &__item {
     flex-shrink: 0;
-    font-family: $font-text;
-    font-weight: 400;
-    font-size: 0.8rem;
-    color: map-get($theme-colors, "text-muted");
-    padding: 4px 12px;
-    white-space: nowrap;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
     cursor: pointer;
-    @include transition(color 0.15s ease, font-weight 0.15s ease);
-    position: relative;
+    padding: 0 2px;
 
     @media (min-width: map-get($viewport, "tablet")) {
-      font-size: 0.9rem;
-      padding: 5px 16px;
+      padding: 0 3px;
     }
 
-    @media (min-width: map-get($viewport, "desktop")) {
-      font-size: 1rem;
-      padding: 6px 20px;
-    }
-
-    &::before {
-      content: attr(data-name);
-      display: block;
-      font-weight: 700;
-      height: 0;
-      overflow: hidden;
-      visibility: hidden;
-    }
-
-    &:hover {
+    &:hover .carousel__item-text {
       color: map-get($theme-colors, "text-secondary");
     }
 
-    &--active {
+    &--active .carousel__item-text {
       color: #fff;
       font-weight: 700;
+    }
+  }
+
+  &__item-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: $font-text;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: map-get($theme-colors, "text-muted");
+    white-space: nowrap;
+    @include transition(color 0.15s ease, font-weight 0.15s ease);
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      font-size: 0.85rem;
+    }
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      font-size: 0.95rem;
     }
   }
 
@@ -85,21 +80,21 @@
     z-index: 10;
     color: map-get($theme-colors, "text-muted");
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.4;
 
     &--left {
-      left: 16px;
+      left: 12px;
 
       @media (min-width: map-get($viewport, "desktop")) {
-        left: 32px;
+        left: 24px;
       }
     }
 
     &--right {
-      right: 16px;
+      right: 12px;
 
       @media (min-width: map-get($viewport, "desktop")) {
-        right: 32px;
+        right: 24px;
       }
     }
   }

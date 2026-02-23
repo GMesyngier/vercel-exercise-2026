@@ -3,57 +3,39 @@
 import { useRef, useCallback, useEffect } from "react";
 
 export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
-  const trackRef = useRef(null);
+  const rowRef = useRef(null);
   const velocityRef = useRef(0);
   const targetVelocityRef = useRef(0);
   const rafRef = useRef(null);
-  const isHoveringRef = useRef(false);
+  const containerRef = useRef(null);
 
-  const ROWS = 4;
   const MAX_SPEED = 8;
   const DEADZONE = 0.1;
   const LERP_FACTOR = 0.06;
 
-  // Generate offset rows: each row is the item list shifted by a different amount
-  const getRowItems = useCallback(
-    (rowIndex) => {
-      const offset = Math.floor((items.length / ROWS) * rowIndex);
-      const shifted = [
-        ...items.slice(offset),
-        ...items.slice(0, offset),
-      ];
-      // Repeat 3x for seamless infinite scroll
-      return [...shifted, ...shifted, ...shifted];
-    },
-    [items]
-  );
+  // Repeat items 3x for seamless infinite scroll
+  const repeatedItems = [...items, ...items, ...items];
 
   // Animation loop
   const animate = useCallback(() => {
-    // Lerp velocity toward target
     velocityRef.current +=
       (targetVelocityRef.current - velocityRef.current) * LERP_FACTOR;
 
-    // Apply tiny threshold to stop jittering
     if (Math.abs(velocityRef.current) < 0.05) {
       velocityRef.current = 0;
     }
 
-    if (trackRef.current && velocityRef.current !== 0) {
-      const rows = trackRef.current.querySelectorAll(".carousel__row");
-      rows.forEach((row, i) => {
-        // Alternate row directions for visual depth
-        const direction = i % 2 === 0 ? 1 : -1;
-        row.scrollLeft += velocityRef.current * direction;
+    if (rowRef.current && velocityRef.current !== 0) {
+      const row = rowRef.current;
+      row.scrollLeft += velocityRef.current;
 
-        // Infinite loop: reset scroll position when hitting boundaries
-        const oneThird = row.scrollWidth / 3;
-        if (row.scrollLeft >= oneThird * 2) {
-          row.scrollLeft -= oneThird;
-        } else if (row.scrollLeft <= 0) {
-          row.scrollLeft += oneThird;
-        }
-      });
+      // Infinite loop: reset scroll position at boundaries
+      const oneThird = row.scrollWidth / 3;
+      if (row.scrollLeft >= oneThird * 2) {
+        row.scrollLeft -= oneThird;
+      } else if (row.scrollLeft <= 0) {
+        row.scrollLeft += oneThird;
+      }
     }
 
     rafRef.current = requestAnimationFrame(animate);
@@ -66,54 +48,40 @@ export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
     };
   }, [animate]);
 
-  // Initialize scroll positions to the middle set
+  // Initialize scroll position to the middle set
   useEffect(() => {
-    if (!trackRef.current) return;
-    const rows = trackRef.current.querySelectorAll(".carousel__row");
-    rows.forEach((row) => {
-      row.scrollLeft = row.scrollWidth / 3;
-    });
+    if (!rowRef.current) return;
+    rowRef.current.scrollLeft = rowRef.current.scrollWidth / 3;
   }, [items]);
 
-  const handleMouseMove = useCallback(
-    (e) => {
-      if (!trackRef.current) return;
-      const rect = trackRef.current.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const centerX = rect.width / 2;
-      const halfWidth = rect.width / 2;
-      const normalized = (mouseX - centerX) / halfWidth; // -1 to 1
+  const handleMouseMove = useCallback((e) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const centerX = rect.width / 2;
+    const halfWidth = rect.width / 2;
+    const normalized = (mouseX - centerX) / halfWidth; // -1 to 1
 
-      // Apply deadzone
-      if (Math.abs(normalized) < DEADZONE) {
-        targetVelocityRef.current = 0;
-      } else {
-        // Map from deadzone edge to 1 → 0 to MAX_SPEED
-        const sign = normalized > 0 ? 1 : -1;
-        const magnitude =
-          ((Math.abs(normalized) - DEADZONE) / (1 - DEADZONE)) * MAX_SPEED;
-        targetVelocityRef.current = sign * magnitude;
-      }
-    },
-    []
-  );
-
-  const handleMouseLeave = useCallback(() => {
-    isHoveringRef.current = false;
-    targetVelocityRef.current = 0;
+    if (Math.abs(normalized) < DEADZONE) {
+      targetVelocityRef.current = 0;
+    } else {
+      const sign = normalized > 0 ? 1 : -1;
+      const magnitude =
+        ((Math.abs(normalized) - DEADZONE) / (1 - DEADZONE)) * MAX_SPEED;
+      targetVelocityRef.current = sign * magnitude;
+    }
   }, []);
 
-  const handleMouseEnter = useCallback(() => {
-    isHoveringRef.current = true;
+  const handleMouseLeave = useCallback(() => {
+    targetVelocityRef.current = 0;
   }, []);
 
   return (
     <div
       className="carousel"
-      ref={trackRef}
+      ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onMouseEnter={handleMouseEnter}
     >
       {/* Left arrow indicator */}
       <div className="carousel__arrow carousel__arrow--left" aria-hidden="true">
@@ -122,23 +90,19 @@ export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
         </svg>
       </div>
 
-      <div className="carousel__belt">
-        {Array.from({ length: ROWS }).map((_, rowIndex) => (
-          <div key={rowIndex} className="carousel__row" tabIndex={-1}>
-            {getRowItems(rowIndex).map((item, i) => {
-              const realIndex = i % items.length;
-              return (
-                <span
-                  key={`${rowIndex}-${i}`}
-                  className={`carousel__item${realIndex === activeIndex ? " carousel__item--active" : ""}`}
-                  onMouseEnter={() => onHoverItem(realIndex)}
-                >
-                  {item.name}
-                </span>
-              );
-            })}
-          </div>
-        ))}
+      <div className="carousel__row" ref={rowRef} tabIndex={-1}>
+        {repeatedItems.map((item, i) => {
+          const realIndex = i % items.length;
+          return (
+            <span
+              key={i}
+              className={`carousel__item${realIndex === activeIndex ? " carousel__item--active" : ""}`}
+              onMouseEnter={() => onHoverItem(realIndex)}
+            >
+              <span className="carousel__item-text">{item.name}</span>
+            </span>
+          );
+        })}
       </div>
 
       {/* Right arrow indicator */}

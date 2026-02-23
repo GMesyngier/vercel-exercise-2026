@@ -1,18 +1,17 @@
 @use "../utils/variables" as *;
 
 .site-footer {
-  max-width: 1200px;
-  margin: 0 auto;
-  border-top: 1px solid map-get($theme-colors, "border");
+  width: 100%;
+  border-top: none;
 
   &__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: map-get($spacing, "m") map-get($spacing, "s");
+    padding: 20px 32px;
 
     @media (min-width: map-get($viewport, "desktop")) {
-      padding: map-get($spacing, "m") 0;
+      padding: 20px 48px;
     }
   }
 
@@ -25,6 +24,6 @@
   &__logo {
     width: 16px;
     height: auto;
-    color: map-get($theme-colors, "text-primary");
+    color: #fff;
   }
 }

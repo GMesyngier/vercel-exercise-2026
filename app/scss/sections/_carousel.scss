@@ -1,0 +1,106 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+  perspective: 600px;
+
+  &__belt {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transform: rotateX(28deg);
+    transform-origin: center center;
+    padding: 16px 0;
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      transform: rotateX(32deg);
+      gap: 4px;
+      padding: 20px 0;
+    }
+  }
+
+  &__row {
+    display: flex;
+    gap: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__item {
+    flex-shrink: 0;
+    font-family: $font-text;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: map-get($theme-colors, "text-muted");
+    padding: 4px 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    @include transition(color 0.15s ease, font-weight 0.15s ease);
+    position: relative;
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      font-size: 0.9rem;
+      padding: 5px 16px;
+    }
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      font-size: 1rem;
+      padding: 6px 20px;
+    }
+
+    &::before {
+      content: attr(data-name);
+      display: block;
+      font-weight: 700;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
+    }
+
+    &:hover {
+      color: map-get($theme-colors, "text-secondary");
+    }
+
+    &--active {
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    color: map-get($theme-colors, "text-muted");
+    pointer-events: none;
+    opacity: 0.5;
+
+    &--left {
+      left: 16px;
+
+      @media (min-width: map-get($viewport, "desktop")) {
+        left: 32px;
+      }
+    }
+
+    &--right {
+      right: 16px;
+
+      @media (min-width: map-get($viewport, "desktop")) {
+        right: 32px;
+      }
+    }
+  }
+}

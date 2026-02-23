@@ -13,7 +13,8 @@ body {
 }
 
 .text-highlighted {
-  color: map-get($theme-colors, "accent");
+  color: #fff;
+  font-weight: 700;
 }
 
 .cross {

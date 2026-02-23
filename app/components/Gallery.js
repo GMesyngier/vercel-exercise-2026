@@ -110,6 +110,20 @@ export default function Gallery() {
         items={allItems}
         onHoverItem={setActiveIndex}
       />
+
+      {/* Hidden preload of all poster images */}
+      <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", pointerEvents: "none" }}>
+        {allItems.map((item) => (
+          <Image
+            key={item.name}
+            src={item["thumb-url"]}
+            alt=""
+            width={10}
+            height={10}
+            priority
+          />
+        ))}
+      </div>
     </section>
   );
 }

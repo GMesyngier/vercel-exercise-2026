@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useCallback } from "react";
 import Image from "next/image";
 import collections from "../../data/collections.json";
 import InfiniteCarousel from "./InfiniteCarousel";
@@ -28,8 +28,26 @@ export default function Gallery() {
   );
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const cardRef = useRef(null);
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
 
   const current = allItems[activeIndex];
+
+  const handleCardMouseMove = useCallback((e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width; // 0 to 1
+    const y = (e.clientY - rect.top) / rect.height; // 0 to 1
+    const MAX_TILT = 8;
+    setTilt({
+      rotateX: (0.5 - y) * MAX_TILT,  // tilt toward mouse vertically
+      rotateY: (x - 0.5) * MAX_TILT,  // tilt toward mouse horizontally
+    });
+  }, []);
+
+  const handleCardMouseLeave = useCallback(() => {
+    setTilt({ rotateX: 0, rotateY: 0 });
+  }, []);
 
   const handleCopy = () => {
     const url = `${window.location.origin}${current["download-url"]}`;
@@ -40,7 +58,15 @@ export default function Gallery() {
     <section className="gallery">
       {/* Featured card area */}
       <div className="gallery__card-area" key={activeIndex}>
-        <div className="gallery__card">
+        <div
+          className="gallery__card"
+          ref={cardRef}
+          onMouseMove={handleCardMouseMove}
+          onMouseLeave={handleCardMouseLeave}
+          style={{
+            transform: `perspective(800px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+          }}
+        >
           <div className="gallery__card-image">
             <Image
               src={current["thumb-url"]}
@@ -51,7 +77,6 @@ export default function Gallery() {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
-          <p className="gallery__card-label">{current.name}</p>
         </div>
 
         {/* Info row below card */}

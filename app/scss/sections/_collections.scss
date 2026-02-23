@@ -43,10 +43,12 @@
 
 .gallery__card {
   width: 100%;
-  background: #d9d9d9;
-  border-radius: 4px;
+  background: transparent;
+  border-radius: 0;
   overflow: hidden;
   position: relative;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 .gallery__card-image {
@@ -61,16 +63,6 @@
     display: block;
     transition: opacity 0.3s ease;
   }
-}
-
-.gallery__card-label {
-  font-family: $font-text;
-  font-weight: 400;
-  font-size: map-get($text-size, "s");
-  color: map-get($theme-colors, "bg");
-  text-align: center;
-  padding: 12px 16px;
-  letter-spacing: -0.01em;
 }
 
 .gallery__card-info {

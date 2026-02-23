@@ -105,19 +105,11 @@
     opacity: 0.4;
 
     &--left {
-      left: 12px;
-
-      @media (min-width: map-get($viewport, "desktop")) {
-        left: 24px;
-      }
+      left: 0;
     }
 
     &--right {
-      right: 12px;
-
-      @media (min-width: map-get($viewport, "desktop")) {
-        right: 24px;
-      }
+      right: 0;
     }
   }
 }

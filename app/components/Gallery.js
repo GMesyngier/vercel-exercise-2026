@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef, useCallback, useEffect } from "react";
+import { useState, useMemo, useRef, useCallback } from "react";
 import collections from "../../data/collections.json";
 import InfiniteCarousel from "./InfiniteCarousel";
 
@@ -31,14 +31,6 @@ export default function Gallery() {
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
 
   const current = allItems[activeIndex];
-
-  // Preload all thumbnail images natively on mount
-  useEffect(() => {
-    allItems.forEach((item) => {
-      const img = new window.Image();
-      img.src = item["thumb-url"];
-    });
-  }, [allItems]);
 
   const handleCardMouseMove = useCallback((e) => {
     if (!cardRef.current) return;
@@ -75,10 +67,14 @@ export default function Gallery() {
           }}
         >
           <div className="gallery__card-image">
-            <img
-              src={current["thumb-url"]}
-              alt={current.name}
-            />
+            {allItems.map((item, i) => (
+              <img
+                key={item.name}
+                src={item["thumb-url"]}
+                alt={item.name}
+                className={i === activeIndex ? "gallery__card-img--active" : "gallery__card-img--hidden"}
+              />
+            ))}
           </div>
         </div>
 

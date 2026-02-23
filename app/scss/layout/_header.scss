@@ -16,8 +16,8 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    max-width: 100%;
-    margin: 0;
+    max-width: 1448px;
+    margin: 0 auto;
     padding: 0 32px;
 
     @media (min-width: map-get($viewport, "desktop")) {

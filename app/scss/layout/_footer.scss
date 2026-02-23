@@ -1,7 +1,8 @@
 @use "../utils/variables" as *;
 
 .site-footer {
-  width: 100%;
+  max-width: 1078px;
+  margin: 0 auto;
   border-top: none;
 
   &__inner {
@@ -11,7 +12,7 @@
     padding: 20px 32px;
 
     @media (min-width: map-get($viewport, "desktop")) {
-      padding: 20px 48px;
+      padding: 20px 0;
     }
   }
 

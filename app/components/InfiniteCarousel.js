@@ -3,11 +3,13 @@
 import { useRef, useCallback, useEffect, useState } from "react";
 
 export default function InfiniteCarousel({ items, onHoverItem }) {
-  const rowRef = useRef(null);
+  const trackRef = useRef(null);
+  const containerRef = useRef(null);
+  const offsetRef = useRef(0);
   const velocityRef = useRef(0);
   const targetVelocityRef = useRef(0);
   const rafRef = useRef(null);
-  const containerRef = useRef(null);
+  const singleSetWidthRef = useRef(0);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
   const MAX_SPEED = 8;
@@ -17,7 +19,14 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   // Repeat items 3x for seamless infinite scroll
   const repeatedItems = [...items, ...items, ...items];
 
-  // Animation loop
+  // Measure the width of one set of items
+  const measureSetWidth = useCallback(() => {
+    if (!trackRef.current) return;
+    // Total width divided by 3 sets
+    singleSetWidthRef.current = trackRef.current.scrollWidth / 3;
+  }, []);
+
+  // Animation loop using translateX instead of scrollLeft
   const animate = useCallback(() => {
     velocityRef.current +=
       (targetVelocityRef.current - velocityRef.current) * LERP_FACTOR;
@@ -26,24 +35,25 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
       velocityRef.current = 0;
     }
 
-    if (rowRef.current && velocityRef.current !== 0) {
-      const row = rowRef.current;
-      const oneThird = row.scrollWidth / 3;
-      const maxScroll = row.scrollWidth - row.clientWidth;
+    if (velocityRef.current !== 0) {
+      offsetRef.current += velocityRef.current;
+      const setW = singleSetWidthRef.current;
 
-      row.scrollLeft += velocityRef.current;
-
-      // Infinite loop: when reaching end of middle third, jump back
-      if (row.scrollLeft >= maxScroll - 2) {
-        row.scrollLeft = row.scrollLeft - oneThird;
-      } else if (row.scrollLeft <= 2) {
-        row.scrollLeft = row.scrollLeft + oneThird;
+      if (setW > 0) {
+        // Wrap the offset within one set width (modular arithmetic)
+        // This guarantees no jump regardless of screen size or speed
+        offsetRef.current = ((offsetRef.current % setW) + setW) % setW;
       }
+    }
+
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translateX(${-offsetRef.current}px)`;
     }
 
     rafRef.current = requestAnimationFrame(animate);
   }, []);
 
+  // Start animation loop
   useEffect(() => {
     rafRef.current = requestAnimationFrame(animate);
     return () => {
@@ -51,16 +61,18 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
     };
   }, [animate]);
 
-  // Initialize scroll position to the middle third
+  // Measure on mount and on resize
   useEffect(() => {
-    if (!rowRef.current) return;
-    // Wait a frame for layout to settle
-    requestAnimationFrame(() => {
-      if (rowRef.current) {
-        rowRef.current.scrollLeft = rowRef.current.scrollWidth / 3;
-      }
-    });
-  }, [items]);
+    measureSetWidth();
+    // Start offset at beginning of the middle set
+    offsetRef.current = singleSetWidthRef.current;
+
+    const handleResize = () => {
+      measureSetWidth();
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [items, measureSetWidth]);
 
   const handleMouseMove = useCallback((e) => {
     if (!containerRef.current) return;
@@ -111,21 +123,23 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
         </svg>
       </div>
 
-      <div className="carousel__row" ref={rowRef} tabIndex={-1}>
-        {repeatedItems.map((item, i) => {
-          const realIndex = i % items.length;
-          const isHovered = realIndex === hoveredIndex;
-          return (
-            <span
-              key={i}
-              className={`carousel__item${isHovered ? " carousel__item--active" : ""}`}
-              onMouseEnter={() => handleItemEnter(realIndex)}
-              onMouseLeave={handleItemLeave}
-            >
-              <span className="carousel__item-text">{item.name}</span>
-            </span>
-          );
-        })}
+      <div className="carousel__track">
+        <div className="carousel__row" ref={trackRef}>
+          {repeatedItems.map((item, i) => {
+            const realIndex = i % items.length;
+            const isHovered = realIndex === hoveredIndex;
+            return (
+              <span
+                key={i}
+                className={`carousel__item${isHovered ? " carousel__item--active" : ""}`}
+                onMouseEnter={() => handleItemEnter(realIndex)}
+                onMouseLeave={handleItemLeave}
+              >
+                <span className="carousel__item-text">{item.name}</span>
+              </span>
+            );
+          })}
+        </div>
       </div>
 
       {/* Right arrow indicator */}

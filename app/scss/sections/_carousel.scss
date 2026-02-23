@@ -63,19 +63,11 @@
     justify-content: center;
     height: 100%;
     cursor: pointer;
-    padding: 0 2px;
-
-    @media (min-width: map-get($viewport, "tablet")) {
-      padding: 0 3px;
-    }
-
-    &:hover .carousel__item-text {
-      color: map-get($theme-colors, "text-secondary");
-    }
+    padding: 0;
+    border-right: 1px solid map-get($theme-colors, "border");
 
     &--active .carousel__item-text {
       color: #fff;
-      font-weight: 700;
     }
   }
 
@@ -83,19 +75,22 @@
     writing-mode: vertical-rl;
     text-orientation: mixed;
     transform: rotate(180deg);
-    font-family: $font-text;
+    font-family: $font-mono;
     font-weight: 400;
     font-size: 0.75rem;
     color: map-get($theme-colors, "text-muted");
     white-space: nowrap;
-    @include transition(color 0.15s ease, font-weight 0.15s ease);
+    padding: 12px 6px;
+    @include transition(color 0.15s ease);
 
     @media (min-width: map-get($viewport, "tablet")) {
       font-size: 0.85rem;
+      padding: 14px 8px;
     }
 
     @media (min-width: map-get($viewport, "desktop")) {
       font-size: 0.95rem;
+      padding: 16px 10px;
     }
   }
 

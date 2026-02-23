@@ -1,13 +1,14 @@
 "use client";
 
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 
-export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
+export default function InfiniteCarousel({ items, onHoverItem }) {
   const rowRef = useRef(null);
   const velocityRef = useRef(0);
   const targetVelocityRef = useRef(0);
   const rafRef = useRef(null);
   const containerRef = useRef(null);
+  const [hoveredIndex, setHoveredIndex] = useState(-1);
 
   const MAX_SPEED = 8;
   const DEADZONE = 0.1;
@@ -29,12 +30,14 @@ export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
       const row = rowRef.current;
       row.scrollLeft += velocityRef.current;
 
-      // Infinite loop: reset scroll position at boundaries
-      const oneThird = row.scrollWidth / 3;
-      if (row.scrollLeft >= oneThird * 2) {
-        row.scrollLeft -= oneThird;
-      } else if (row.scrollLeft <= 0) {
-        row.scrollLeft += oneThird;
+      // Infinite loop with buffer to avoid visible jump
+      const totalWidth = row.scrollWidth;
+      const oneThird = totalWidth / 3;
+
+      if (row.scrollLeft >= oneThird * 2 - 1) {
+        row.scrollLeft = row.scrollLeft - oneThird;
+      } else if (row.scrollLeft <= 1) {
+        row.scrollLeft = row.scrollLeft + oneThird;
       }
     }
 
@@ -48,10 +51,15 @@ export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
     };
   }, [animate]);
 
-  // Initialize scroll position to the middle set
+  // Initialize scroll position to the middle third
   useEffect(() => {
     if (!rowRef.current) return;
-    rowRef.current.scrollLeft = rowRef.current.scrollWidth / 3;
+    // Wait a frame for layout to settle
+    requestAnimationFrame(() => {
+      if (rowRef.current) {
+        rowRef.current.scrollLeft = rowRef.current.scrollWidth / 3;
+      }
+    });
   }, [items]);
 
   const handleMouseMove = useCallback((e) => {
@@ -60,7 +68,7 @@ export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
     const mouseX = e.clientX - rect.left;
     const centerX = rect.width / 2;
     const halfWidth = rect.width / 2;
-    const normalized = (mouseX - centerX) / halfWidth; // -1 to 1
+    const normalized = (mouseX - centerX) / halfWidth;
 
     if (Math.abs(normalized) < DEADZONE) {
       targetVelocityRef.current = 0;
@@ -74,6 +82,19 @@ export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
 
   const handleMouseLeave = useCallback(() => {
     targetVelocityRef.current = 0;
+    setHoveredIndex(-1);
+  }, []);
+
+  const handleItemEnter = useCallback(
+    (realIndex) => {
+      setHoveredIndex(realIndex);
+      onHoverItem(realIndex);
+    },
+    [onHoverItem]
+  );
+
+  const handleItemLeave = useCallback(() => {
+    setHoveredIndex(-1);
   }, []);
 
   return (
@@ -93,11 +114,13 @@ export default function InfiniteCarousel({ items, activeIndex, onHoverItem }) {
       <div className="carousel__row" ref={rowRef} tabIndex={-1}>
         {repeatedItems.map((item, i) => {
           const realIndex = i % items.length;
+          const isHovered = realIndex === hoveredIndex;
           return (
             <span
               key={i}
-              className={`carousel__item${realIndex === activeIndex ? " carousel__item--active" : ""}`}
-              onMouseEnter={() => onHoverItem(realIndex)}
+              className={`carousel__item${isHovered ? " carousel__item--active" : ""}`}
+              onMouseEnter={() => handleItemEnter(realIndex)}
+              onMouseLeave={handleItemLeave}
             >
               <span className="carousel__item-text">{item.name}</span>
             </span>

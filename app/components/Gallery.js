@@ -83,7 +83,6 @@ export default function Gallery() {
       {/* Infinite carousel */}
       <InfiniteCarousel
         items={allItems}
-        activeIndex={activeIndex}
         onHoverItem={setActiveIndex}
       />
     </section>

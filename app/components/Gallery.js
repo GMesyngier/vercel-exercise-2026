@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef, useCallback } from "react";
-import Image from "next/image";
+import { useState, useMemo, useRef, useCallback, useEffect } from "react";
 import collections from "../../data/collections.json";
 import InfiniteCarousel from "./InfiniteCarousel";
 
@@ -32,6 +31,14 @@ export default function Gallery() {
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
 
   const current = allItems[activeIndex];
+
+  // Preload all thumbnail images natively on mount
+  useEffect(() => {
+    allItems.forEach((item) => {
+      const img = new window.Image();
+      img.src = item["thumb-url"];
+    });
+  }, [allItems]);
 
   const handleCardMouseMove = useCallback((e) => {
     if (!cardRef.current) return;
@@ -68,13 +75,9 @@ export default function Gallery() {
           }}
         >
           <div className="gallery__card-image">
-            <Image
+            <img
               src={current["thumb-url"]}
               alt={current.name}
-              width={480}
-              height={current.category === "Background" ? 320 : 640}
-              priority
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
         </div>
@@ -111,19 +114,7 @@ export default function Gallery() {
         onHoverItem={setActiveIndex}
       />
 
-      {/* Hidden preload of all poster images */}
-      <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", pointerEvents: "none" }}>
-        {allItems.map((item) => (
-          <Image
-            key={item.name}
-            src={item["thumb-url"]}
-            alt=""
-            width={10}
-            height={10}
-            priority
-          />
-        ))}
-      </div>
+
     </section>
   );
 }

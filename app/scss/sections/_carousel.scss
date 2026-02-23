@@ -4,7 +4,7 @@
 .carousel {
   position: relative;
   width: 100%;
-  max-width: 1448px;
+  max-width: 1280px;
   margin: 0 auto;
   overflow: hidden;
   cursor: default;
@@ -22,7 +22,7 @@
     pointer-events: none;
 
     @media (min-width: map-get($viewport, "desktop")) {
-      width: 200px;
+      width: 300px;
     }
   }
 
@@ -86,12 +86,12 @@
 
     @media (min-width: map-get($viewport, "tablet")) {
       font-size: 0.85rem;
-      padding: 14px 8px;
+      padding: 14px 6px;
     }
 
     @media (min-width: map-get($viewport, "desktop")) {
       font-size: 0.95rem;
-      padding: 16px 10px;
+      padding: 16px 6px;
     }
   }
 

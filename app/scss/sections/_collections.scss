@@ -17,11 +17,7 @@
   justify-content: center;
   align-items: center;
   padding: 0 24px;
-  gap: 32px;
-
-  @media (min-width: map-get($viewport, "desktop")) {
-    gap: 48px;
-  }
+  gap: 10rem;
 }
 
 // Featured card area

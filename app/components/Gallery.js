@@ -39,7 +39,7 @@ export default function Gallery() {
   return (
     <section className="gallery">
       {/* Featured card area */}
-      <div className="gallery__card-area">
+      <div className="gallery__card-area" key={activeIndex}>
         <div className="gallery__card">
           <div className="gallery__card-image">
             <Image

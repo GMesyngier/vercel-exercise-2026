@@ -28,15 +28,15 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
 
     if (rowRef.current && velocityRef.current !== 0) {
       const row = rowRef.current;
+      const oneThird = row.scrollWidth / 3;
+      const maxScroll = row.scrollWidth - row.clientWidth;
+
       row.scrollLeft += velocityRef.current;
 
-      // Infinite loop with buffer to avoid visible jump
-      const totalWidth = row.scrollWidth;
-      const oneThird = totalWidth / 3;
-
-      if (row.scrollLeft >= oneThird * 2 - 1) {
+      // Infinite loop: when reaching end of middle third, jump back
+      if (row.scrollLeft >= maxScroll - 2) {
         row.scrollLeft = row.scrollLeft - oneThird;
-      } else if (row.scrollLeft <= 1) {
+      } else if (row.scrollLeft <= 2) {
         row.scrollLeft = row.scrollLeft + oneThird;
       }
     }

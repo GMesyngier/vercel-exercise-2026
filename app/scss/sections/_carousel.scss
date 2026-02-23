@@ -8,6 +8,32 @@
   cursor: default;
   user-select: none;
 
+  // Gradient fade bars on both sides
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 5;
+    pointer-events: none;
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      width: 200px;
+    }
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, #000 0%, transparent 100%);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, #000 0%, transparent 100%);
+  }
+
   &__row {
     display: flex;
     align-items: flex-end;

@@ -17,7 +17,7 @@
   .pre-tri-left {
     position: absolute;
     right: auto;
-    left: -11px;
+    left: -10px;
     top: 0;
     height: 19px;
     width: 10.8px;
@@ -96,7 +96,7 @@
   }
 
   &.pre-bar-2 {
-    top: 16.5px;
+    top: 15.5px;
   }
 
   @media (min-width: map-get($viewport, "tablet")) {

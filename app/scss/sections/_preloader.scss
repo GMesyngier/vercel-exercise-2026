@@ -2,6 +2,10 @@
 
 .preloader {
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   inset: 0;
   z-index: 9999;
   background: #000;
@@ -16,7 +20,9 @@
     left: -11px;
     top: 0;
     height: 19px;
-    width: auto;
+    width: 10.8px;
+    min-height: 19px;
+    min-width: 10.8px;
   }
 
   .pre-tri-right {
@@ -25,30 +31,32 @@
     right: -11.5px;
     top: 0;
     height: 19px;
-    width: auto;
+    width: 10.8px;
+    min-height: 19px;
+    min-width: 10.8px;
     opacity: .15;
     transition: opacity .1s ease-in-out;
   }
 
   .pre-triangle {
-    height: 19px;
+    height: 20px;
     width: auto;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity .3s ease-in .2s, height 1.2s ease-in-out 1s;
+    transition: opacity .3s ease-in .4s, height 1s ease-in-out 1s;
   }
 
   .pre-animation {
     position: relative;
     width: 200px;
     height: 19px;
-    transition: width .5s ease-in-out;
     overflow: visible;
     align-items: center;
     justify-content: center;
+    transition: width .6s ease-in-out;
 
     @media (min-width: map-get($viewport, "tablet")) {
       width: 280px;
@@ -81,7 +89,7 @@
   background: rgba(#1f1f1f, 1);
   position: relative;
   overflow: hidden;
-  transition: width .5s ease-in-out;
+  transition: width .6s ease-in-out;
 
   &.pre-bar-1 {
     top: 0px;

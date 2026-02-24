@@ -61,17 +61,41 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
     };
   }, [animate]);
 
-  // Measure on mount and on resize
+  // Measure on mount, on resize, and when fonts finish loading
   useEffect(() => {
-    measureSetWidth();
-    // Start offset at beginning of the middle set
-    offsetRef.current = singleSetWidthRef.current;
-
-    const handleResize = () => {
+    const doMeasure = () => {
+      const oldSetW = singleSetWidthRef.current;
       measureSetWidth();
+      // Adjust offset proportionally so the visual position doesn't jump
+      if (oldSetW > 0 && singleSetWidthRef.current > 0 && oldSetW !== singleSetWidthRef.current) {
+        const ratio = offsetRef.current / oldSetW;
+        offsetRef.current = ratio * singleSetWidthRef.current;
+      }
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    // Initial measure after layout settles
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        measureSetWidth();
+        offsetRef.current = singleSetWidthRef.current;
+      });
+    });
+
+    // Re-measure when fonts finish loading (padding/text size may change)
+    document.fonts.ready.then(doMeasure);
+
+    // ResizeObserver on the track to catch any layout shift
+    let ro;
+    if (trackRef.current) {
+      ro = new ResizeObserver(doMeasure);
+      ro.observe(trackRef.current);
+    }
+
+    window.addEventListener("resize", doMeasure);
+    return () => {
+      window.removeEventListener("resize", doMeasure);
+      if (ro) ro.disconnect();
+    };
   }, [items, measureSetWidth]);
 
   const handleMouseMove = useCallback((e) => {

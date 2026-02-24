@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.5s ease 3s;
+  transition: opacity 0.5s ease 3.5s;
 
   .pre-tri-left {
     position: absolute;
@@ -38,7 +38,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity .5s ease-in-out 0.3s, height 1s ease-in-out .7s;
+    transition: opacity .3s ease-in .2s, height 1.2s ease-in-out 1s;
   }
 
   .pre-animation {

@@ -28,7 +28,7 @@ export default function Preloader({ onComplete }) {
           // Wait for fade-out animation to finish before notifying parent
           setTimeout(() => {
             onComplete();
-          }, 3500);
+          }, 4000);
         }, 200);
       }
     };
@@ -43,8 +43,6 @@ export default function Preloader({ onComplete }) {
 
   return (
     <div className={`preloader${done ? " preloader--done" : ""}`}>
-
-      <img className="pre-triangle" src="./preload/triangle.svg" />
       <div className="pre-animation">
         <img className="pre-tri-left" src="./preload/tri-left.svg" />
         <img className="pre-tri-right" src="./preload/tri-right.svg" />
@@ -62,6 +60,8 @@ export default function Preloader({ onComplete }) {
           />
         </div>
       </div>
+
+      <img className="pre-triangle" src="./preload/triangle.svg" />
     </div>
   );
 }

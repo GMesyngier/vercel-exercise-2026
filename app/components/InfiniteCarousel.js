@@ -16,14 +16,15 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   const DEADZONE = 0.1;
   const LERP_FACTOR = 0.06;
 
-  // Repeat items 3x for seamless infinite scroll
-  const repeatedItems = [...items, ...items, ...items];
+  const SETS = 5;
+
+  // Repeat items 5x so there's always content on both sides of the viewport
+  const repeatedItems = Array.from({ length: SETS }, () => items).flat();
 
   // Measure the width of one set of items
   const measureSetWidth = useCallback(() => {
     if (!trackRef.current) return;
-    // Total width divided by 3 sets
-    singleSetWidthRef.current = trackRef.current.scrollWidth / 3;
+    singleSetWidthRef.current = trackRef.current.scrollWidth / SETS;
   }, []);
 
   // Animation loop using translateX instead of scrollLeft
@@ -37,13 +38,14 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
 
     if (velocityRef.current !== 0) {
       offsetRef.current += velocityRef.current;
-      const setW = singleSetWidthRef.current;
+    }
 
-      if (setW > 0) {
-        // Wrap the offset within one set width (modular arithmetic)
-        // This guarantees no jump regardless of screen size or speed
-        offsetRef.current = ((offsetRef.current % setW) + setW) % setW;
-      }
+    // Wrap so offset stays within the middle set range [setW, setW*2)
+    // This keeps 1 full set to the left and 2+ to the right always visible
+    const setW = singleSetWidthRef.current;
+    if (setW > 0) {
+      while (offsetRef.current >= setW * 3) offsetRef.current -= setW;
+      while (offsetRef.current < setW) offsetRef.current += setW;
     }
 
     if (trackRef.current) {
@@ -66,18 +68,23 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
     const doMeasure = () => {
       const oldSetW = singleSetWidthRef.current;
       measureSetWidth();
+      const newSetW = singleSetWidthRef.current;
       // Adjust offset proportionally so the visual position doesn't jump
-      if (oldSetW > 0 && singleSetWidthRef.current > 0 && oldSetW !== singleSetWidthRef.current) {
-        const ratio = offsetRef.current / oldSetW;
-        offsetRef.current = ratio * singleSetWidthRef.current;
+      if (oldSetW > 0 && newSetW > 0 && oldSetW !== newSetW) {
+        offsetRef.current = (offsetRef.current / oldSetW) * newSetW;
+      }
+      // Clamp into valid range
+      if (newSetW > 0) {
+        while (offsetRef.current >= newSetW * 3) offsetRef.current -= newSetW;
+        while (offsetRef.current < newSetW) offsetRef.current += newSetW;
       }
     };
 
-    // Initial measure after layout settles
+    // Initial measure after layout settles — start in the middle of the track
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         measureSetWidth();
-        offsetRef.current = singleSetWidthRef.current;
+        offsetRef.current = singleSetWidthRef.current * 2;
       });
     });
 
@@ -140,7 +147,8 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
     offsetRef.current += delta;
     const setW = singleSetWidthRef.current;
     if (setW > 0) {
-      offsetRef.current = ((offsetRef.current % setW) + setW) % setW;
+      while (offsetRef.current >= setW * 3) offsetRef.current -= setW;
+      while (offsetRef.current < setW) offsetRef.current += setW;
     }
 
     // Store velocity for inertia on release

@@ -81,7 +81,7 @@
     font-family: $font-mono;
     font-weight: 400;
     font-size: 0.75rem;
-    color: map-get($theme-colors, "text-muted");
+    color: map-get($theme-colors, "text-secondary");
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

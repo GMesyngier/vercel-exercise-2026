@@ -57,6 +57,7 @@
     align-items: center;
     justify-content: center;
     transition: width .6s ease-in-out;
+    top: 1px;
 
     @media (min-width: map-get($viewport, "tablet")) {
       width: 280px;

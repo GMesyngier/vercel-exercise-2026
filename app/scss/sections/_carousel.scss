@@ -83,17 +83,14 @@
     font-size: 0.75rem;
     color: map-get($theme-colors, "text-muted");
     white-space: nowrap;
-    padding: 12px 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 8px 6px;
+    height: 100%;
     @include transition(color 0.15s ease);
 
     @media (min-width: map-get($viewport, "tablet")) {
       font-size: 0.85rem;
-      padding: 14px 6px;
-    }
-
-    @media (min-width: map-get($viewport, "desktop")) {
-      font-size: 0.95rem;
-      padding: 16px 6px;
     }
   }
 

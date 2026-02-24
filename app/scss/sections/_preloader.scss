@@ -1,0 +1,48 @@
+@use '../utils/variables' as *;
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+
+  &--done {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.preloader__bar-track {
+  width: 200px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+
+  @media (min-width: map-get($viewport, "tablet")) {
+    width: 280px;
+  }
+}
+
+.preloader__bar-fill {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-out;
+}
+
+// Site content hidden until loaded
+.site-content {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.1s;
+}
+
+.site-content--loaded {
+  opacity: 1;
+}

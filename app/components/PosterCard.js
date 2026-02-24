@@ -68,3 +68,4 @@ export default function PosterCard({ title, category, image, downloadUrl, landsc
     </article>
   );
 }
+

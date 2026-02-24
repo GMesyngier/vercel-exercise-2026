@@ -5,6 +5,7 @@
   width: 100%;
   margin: 0 auto;
   border-top: none;
+  flex-shrink: 0;
 
   &__inner {
     display: flex;
@@ -13,7 +14,7 @@
     padding: 20px 32px;
 
     @media (min-width: map-get($viewport, "desktop")) {
-      padding: 20px 0;
+      padding: 2.5rem 0 20px;
     }
   }
 

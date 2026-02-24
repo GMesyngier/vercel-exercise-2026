@@ -15,12 +15,21 @@ function DownloadIcon() {
 function CopyIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m9.86-2.046a4.5 4.5 0 0 0-1.242-7.244l4.5-4.5a4.5 4.5 0 0 1 6.364 6.364l-1.757 1.757" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
     </svg>
   );
 }
 
 export default function Gallery() {
+  const [copied, setCopied] = useState(false);
   const allItems = useMemo(
     () => [...collections.posters, ...collections.backgrounds],
     []
@@ -50,56 +59,60 @@ export default function Gallery() {
 
   const handleCopy = () => {
     const url = `${window.location.origin}${current["download-url"]}`;
-    navigator.clipboard.writeText(url);
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   };
 
   return (
     <section className="gallery">
       {/* Featured card area */}
       <div className="gallery__card-area">
-        <div
-          className="gallery__card"
-          ref={cardRef}
-          onMouseMove={handleCardMouseMove}
-          onMouseLeave={handleCardMouseLeave}
-          style={{
-            transform: `perspective(800px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
-          }}
-        >
-          <div className="gallery__card-image">
-            {allItems.map((item, i) => (
-              <img
-                key={item.name}
-                src={item["thumb-url"]}
-                alt={item.name}
-                className={i === activeIndex ? "gallery__card-img--active" : "gallery__card-img--hidden"}
-              />
-            ))}
+        <div className="gallery__card-wrapper">
+          <div
+            className="gallery__card"
+            ref={cardRef}
+            onMouseMove={handleCardMouseMove}
+            onMouseLeave={handleCardMouseLeave}
+            style={{
+              transform: `perspective(800px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+            }}
+          >
+            <div className="gallery__card-image">
+              {allItems.map((item, i) => (
+                <img
+                  key={item.name}
+                  src={item["thumb-url"]}
+                  alt={item.name}
+                  className={i === activeIndex ? "gallery__card-img--active" : "gallery__card-img--hidden"}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Info row below card - keyed for subtle text fade */}
-        <div className="gallery__card-info" key={activeIndex}>
-          <div className="gallery__card-meta">
-            <h2 className="gallery__card-title">{current.name}</h2>
-            <span className="gallery__card-category">{current.category}</span>
-          </div>
-          <div className="gallery__card-actions">
-            <a
-              href={current["download-url"]}
-              download={current["download-url"].split("/").pop()}
-              className="icon-btn"
-              aria-label={`Download ${current.name}`}
-            >
-              <DownloadIcon />
-            </a>
-            <button
-              className="icon-btn"
-              aria-label={`Copy link for ${current.name}`}
-              onClick={handleCopy}
-            >
-              <CopyIcon />
-            </button>
+          {/* Info row below card - keyed for subtle text fade */}
+          <div className="gallery__card-info" key={activeIndex}>
+            <div className="gallery__card-meta">
+              <h2 className="gallery__card-title">{current.name}</h2>
+              <span className="gallery__card-category">{current.category}</span>
+            </div>
+            <div className="gallery__card-actions">
+              <a
+                href={current["download-url"]}
+                download={current["download-url"].split("/").pop()}
+                className="icon-btn"
+                aria-label={`Download ${current.name}`}
+              >
+                <DownloadIcon />
+              </a>
+              <button
+                className="icon-btn"
+                aria-label={`Copy link for ${current.name}`}
+                onClick={handleCopy}>
+                {copied ? <CheckIcon /> : <CopyIcon />}
+              </button>
+            </div>
           </div>
         </div>
       </div>

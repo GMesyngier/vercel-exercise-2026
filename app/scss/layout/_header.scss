@@ -19,6 +19,7 @@
     max-width: 1448px;
     margin: 0 auto;
     padding: 0 32px;
+    position: relative;
 
     @media (min-width: map-get($viewport, "desktop")) {
       padding: 0 48px;
@@ -39,6 +40,11 @@
     color: map-get($theme-colors, "text-secondary");
     letter-spacing: -0.01em;
     display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    white-space: nowrap;
 
     @media (min-width: map-get($viewport, "tablet")) {
       display: block;

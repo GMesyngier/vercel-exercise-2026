@@ -1,0 +1,166 @@
+@use '../utils/variables' as *;
+
+.preloader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease 3.5s;
+
+  .pre-tri-left {
+    position: absolute;
+    right: auto;
+    left: -11px;
+    top: 0;
+    height: 19px;
+    width: 10.8px;
+    min-height: 19px;
+    min-width: 10.8px;
+  }
+
+  .pre-tri-right {
+    position: absolute;
+    left: auto;
+    right: -11.5px;
+    top: 0;
+    height: 19px;
+    width: 10.8px;
+    min-height: 19px;
+    min-width: 10.8px;
+    opacity: .15;
+    transition: opacity .1s ease-in-out;
+  }
+
+  .pre-triangle {
+    height: 20px;
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity .3s ease-in .4s, height 1.2s ease-in-out 1s;
+  }
+
+  .pre-animation {
+    position: relative;
+    width: 200px;
+    height: 19px;
+    overflow: visible;
+    align-items: center;
+    justify-content: center;
+    transition: width .6s ease-in-out;
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      width: 280px;
+    }
+  }
+
+  &--done {
+    opacity: 0;
+    pointer-events: none;
+
+    .pre-animation,
+    .preloader__bar-track {
+      width: 0;
+    }
+
+    .pre-triangle {
+      opacity: 1;
+      height: 100px;
+    }
+
+    .pre-tri-right {
+      opacity: 1;
+    }
+  }
+}
+
+.preloader__bar-track {
+  width: 200px;
+  height: 1px;
+  background: rgba(#1f1f1f, 1);
+  position: relative;
+  overflow: hidden;
+  transition: width .6s ease-in-out;
+
+  &.pre-bar-1 {
+    top: 0px;
+  }
+
+  &.pre-bar-2 {
+    top: 16.5px;
+  }
+
+  @media (min-width: map-get($viewport, "tablet")) {
+    width: 280px;
+  }
+}
+
+.preloader__bar-fill {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-out;
+}
+
+// Site content hidden until loaded
+.site-content {
+  opacity: 0;
+  transition: opacity 0.5s ease 0.1s;
+
+  .site-header {
+    top: -60px;
+    opacity: 0;
+    transition: top 1s ease-out, opacity 1s ease-out;
+  }
+
+  .carousel {
+    bottom: -200px;
+    opacity: 0;
+    transition: bottom 1s ease-out, opacity 1s ease-out;
+  }
+
+  .site-footer {
+    opacity: 0;
+    bottom: -200px;
+    transition: bottom 1s ease-out, opacity 1s ease-out;
+  }
+
+  .gallery__card-area {
+    opacity: 0;
+    transition: opacity 1.5s ease-out 1s;
+  }
+}
+
+.site-content--loaded {
+  opacity: 1;
+
+  .site-header {
+    opacity: 1;
+    top: 0;
+  }
+
+  .carousel {
+    opacity: 1;
+    bottom: 0;
+  }
+
+  .site-footer {
+    opacity: 1;
+    bottom: 0;
+  }
+
+  .gallery__card-area {
+    opacity: 1;
+  }
+}

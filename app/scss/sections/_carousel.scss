@@ -4,11 +4,12 @@
 .carousel {
   position: relative;
   width: 100%;
-  max-width: 1280px;
+  max-width: 2800px;
   margin: 0 auto;
   overflow: hidden;
   cursor: default;
   user-select: none;
+  flex-shrink: 0;
 
   // Gradient fade bars on both sides
   &::before,
@@ -39,14 +40,15 @@
   &__track {
     overflow: hidden;
     width: 100%;
-    height: 180px;
+    height: 120px;
+    flex-shrink: 0;
 
     @media (min-width: map-get($viewport, "tablet")) {
-      height: 220px;
+      height: 160px;
     }
 
     @media (min-width: map-get($viewport, "desktop")) {
-      height: 260px;
+      height: 200px;
     }
   }
 
@@ -79,19 +81,16 @@
     font-family: $font-mono;
     font-weight: 400;
     font-size: 0.75rem;
-    color: map-get($theme-colors, "text-muted");
+    color: map-get($theme-colors, "text-secondary");
     white-space: nowrap;
-    padding: 12px 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 8px 4px;
+    height: 100%;
     @include transition(color 0.15s ease);
 
     @media (min-width: map-get($viewport, "tablet")) {
       font-size: 0.85rem;
-      padding: 14px 6px;
-    }
-
-    @media (min-width: map-get($viewport, "desktop")) {
-      font-size: 0.95rem;
-      padding: 16px 6px;
     }
   }
 
@@ -100,9 +99,9 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    color: map-get($theme-colors, "text-muted");
+    color: #A1A1A1;
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 1;
 
     &--left {
       left: 0;

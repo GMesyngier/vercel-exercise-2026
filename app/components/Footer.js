@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="site-footer__inner">
         <p className="site-footer__copy">
-          Vercel &copy; {currentYear} all rights reserved.
+          <span className="text-highlighted">Vercel</span> &copy;{currentYear} all rights reserved.
         </p>
         <svg
           className="site-footer__logo"

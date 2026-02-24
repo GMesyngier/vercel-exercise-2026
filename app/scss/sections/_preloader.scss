@@ -41,8 +41,42 @@
 .site-content {
   opacity: 0;
   transition: opacity 0.5s ease 0.1s;
+
+  .site-header {
+    top: -60px;
+    opacity: 0;
+    transition: top .3s ease-out, opacity .3s ease-out;
+  }
+
+  .carousel {
+    bottom: -200px;
+    opacity: 0;
+    transition: bottom .3s ease-out, opacity .3s ease-out;
+  }
+
+  .site-footer {
+    opacity: 0;
+    bottom: -200px;
+    transition: bottom .3s ease-out, opacity .3s ease-out;
+  }
 }
 
 .site-content--loaded {
   opacity: 1;
+
+  .site-header {
+    opacity: 1;
+    top: 0;
+  }
+
+  .carousel {
+    opacity: 1;
+    bottom: 0;
+  }
+
+  .site-footer {
+    opacity: 1;
+    bottom: 0;
+
+  }
 }

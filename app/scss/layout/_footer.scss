@@ -5,6 +5,7 @@
   width: 100%;
   margin: 0 auto;
   border-top: none;
+  flex-shrink: 0;
 
   &__inner {
     display: flex;

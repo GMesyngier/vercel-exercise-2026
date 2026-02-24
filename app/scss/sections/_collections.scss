@@ -17,7 +17,17 @@
   justify-content: center;
   align-items: center;
   padding: 0 24px;
-  gap: 10rem;
+  gap: 2rem;
+  min-height: 0;
+  overflow: hidden;
+
+  @media (min-width: map-get($viewport, "tablet")) {
+    gap: 3rem;
+  }
+
+  @media (min-width: map-get($viewport, "desktop")) {
+    gap: 4rem;
+  }
 }
 
 // Featured card area
@@ -26,6 +36,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -38,10 +49,15 @@
   align-items: center;
   width: 100%;
   max-width: 540px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .gallery__card {
   width: 100%;
+  flex: 1;
+  min-height: 0;
   background: transparent;
   border-radius: 0;
   overflow: hidden;
@@ -52,19 +68,20 @@
 
 .gallery__card-image {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  height: 100%;
   overflow: hidden;
   position: relative;
 }
 
 .gallery__card-img--active {
+  object-fit: cover;
+  opacity: 1;
+  width: 100%;
+  display: block;
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  opacity: 1;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .gallery__card-img--hidden {
@@ -83,8 +100,9 @@
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
-  padding: map-get($spacing, "xs") 0 0;
+  padding: 0.75rem 0 0;
   animation: card-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  flex-shrink: 0;
 }
 
 .gallery__card-meta {

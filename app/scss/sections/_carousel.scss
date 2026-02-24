@@ -9,6 +9,7 @@
   overflow: hidden;
   cursor: default;
   user-select: none;
+  flex-shrink: 0;
 
   // Gradient fade bars on both sides
   &::before,
@@ -39,14 +40,15 @@
   &__track {
     overflow: hidden;
     width: 100%;
-    height: 180px;
+    height: 120px;
+    flex-shrink: 0;
 
     @media (min-width: map-get($viewport, "tablet")) {
-      height: 220px;
+      height: 160px;
     }
 
     @media (min-width: map-get($viewport, "desktop")) {
-      height: 260px;
+      height: 200px;
     }
   }
 

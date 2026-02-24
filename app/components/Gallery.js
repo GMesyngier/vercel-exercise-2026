@@ -69,48 +69,50 @@ export default function Gallery() {
     <section className="gallery">
       {/* Featured card area */}
       <div className="gallery__card-area">
-        <div
-          className="gallery__card"
-          ref={cardRef}
-          onMouseMove={handleCardMouseMove}
-          onMouseLeave={handleCardMouseLeave}
-          style={{
-            transform: `perspective(800px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
-          }}
-        >
-          <div className="gallery__card-image">
-            {allItems.map((item, i) => (
-              <img
-                key={item.name}
-                src={item["thumb-url"]}
-                alt={item.name}
-                className={i === activeIndex ? "gallery__card-img--active" : "gallery__card-img--hidden"}
-              />
-            ))}
+        <div className="gallery__card-wrapper">
+          <div
+            className="gallery__card"
+            ref={cardRef}
+            onMouseMove={handleCardMouseMove}
+            onMouseLeave={handleCardMouseLeave}
+            style={{
+              transform: `perspective(800px) rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg)`,
+            }}
+          >
+            <div className="gallery__card-image">
+              {allItems.map((item, i) => (
+                <img
+                  key={item.name}
+                  src={item["thumb-url"]}
+                  alt={item.name}
+                  className={i === activeIndex ? "gallery__card-img--active" : "gallery__card-img--hidden"}
+                />
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Info row below card - keyed for subtle text fade */}
-        <div className="gallery__card-info" key={activeIndex}>
-          <div className="gallery__card-meta">
-            <h2 className="gallery__card-title">{current.name}</h2>
-            <span className="gallery__card-category">{current.category}</span>
-          </div>
-          <div className="gallery__card-actions">
-            <a
-              href={current["download-url"]}
-              download={current["download-url"].split("/").pop()}
-              className="icon-btn"
-              aria-label={`Download ${current.name}`}
-            >
-              <DownloadIcon />
-            </a>
-            <button
-              className="icon-btn"
-              aria-label={`Copy link for ${current.name}`}
-              onClick={handleCopy}>
-              {copied ? <CheckIcon /> : <CopyIcon />}
-            </button>
+          {/* Info row below card - keyed for subtle text fade */}
+          <div className="gallery__card-info" key={activeIndex}>
+            <div className="gallery__card-meta">
+              <h2 className="gallery__card-title">{current.name}</h2>
+              <span className="gallery__card-category">{current.category}</span>
+            </div>
+            <div className="gallery__card-actions">
+              <a
+                href={current["download-url"]}
+                download={current["download-url"].split("/").pop()}
+                className="icon-btn"
+                aria-label={`Download ${current.name}`}
+              >
+                <DownloadIcon />
+              </a>
+              <button
+                className="icon-btn"
+                aria-label={`Copy link for ${current.name}`}
+                onClick={handleCopy}>
+                {copied ? <CheckIcon /> : <CopyIcon />}
+              </button>
+            </div>
           </div>
         </div>
       </div>

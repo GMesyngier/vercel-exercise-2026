@@ -28,7 +28,7 @@
 @keyframes card-enter {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(24px);
   }
 
   to {
@@ -38,14 +38,24 @@
 }
 
 .gallery__card-area {
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  min-height: 0;
   display: flex;
+  height: 100%;
+}
+
+.gallery__card-wrapper {
   flex-direction: column;
   align-items: center;
   width: 100%;
   max-width: 540px;
-  flex: 1;
   min-height: 0;
-  overflow: hidden;
+  display: flex;
 }
 
 .gallery__card {
@@ -54,7 +64,6 @@
   min-height: 0;
   background: transparent;
   border-radius: 0;
-  overflow: hidden;
   position: relative;
   transition: transform 0.15s ease-out;
   will-change: transform;
@@ -63,8 +72,8 @@
 .gallery__card-image {
   width: 100%;
   height: 100%;
-  overflow: hidden;
   position: relative;
+  aspect-ratio: auto;
 }
 
 .gallery__card-img--active {
@@ -72,10 +81,8 @@
   opacity: 1;
   width: 100%;
   display: block;
-  position: absolute;
   inset: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  animation: card-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .gallery__card-img--hidden {
@@ -94,9 +101,9 @@
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
-  padding: 0.75rem 0 0;
-  animation: card-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  padding: 2rem 0 0;
   flex-shrink: 0;
+  animation: card-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .gallery__card-meta {

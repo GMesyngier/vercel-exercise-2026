@@ -165,11 +165,14 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   const touchStartXRef = useRef(0);
   const touchPrevXRef = useRef(0);
   const isTouchingRef = useRef(false);
+  const touchDistanceRef = useRef(0);
+  const TAP_THRESHOLD = 10; // px — if finger moved less than this, it's a tap
 
   const handleTouchStart = useCallback((e) => {
     isTouchingRef.current = true;
     touchStartXRef.current = e.touches[0].clientX;
     touchPrevXRef.current = e.touches[0].clientX;
+    touchDistanceRef.current = 0;
     // Kill any existing inertia
     targetVelocityRef.current = 0;
     velocityRef.current = 0;
@@ -180,6 +183,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
     const currentX = e.touches[0].clientX;
     const delta = touchPrevXRef.current - currentX;
     touchPrevXRef.current = currentX;
+    touchDistanceRef.current += Math.abs(delta);
 
     // Apply delta directly to offset for responsive dragging
     offsetRef.current += delta;
@@ -187,7 +191,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
 
     // Store velocity for inertia on release
     velocityRef.current = delta;
-  }, []);
+  }, [wrapOffset]);
 
   const handleTouchEnd = useCallback(() => {
     isTouchingRef.current = false;
@@ -214,6 +218,17 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
     if (isTouchDeviceRef.current) return;
     setHoveredIndex(-1);
   }, []);
+
+  // Tap handler for mobile: select item only if the finger didn't swipe
+  const handleItemClick = useCallback(
+    (realIndex) => {
+      if (!isTouchDeviceRef.current) return; // desktop uses hover, not click
+      if (touchDistanceRef.current > TAP_THRESHOLD) return; // was a swipe, not a tap
+      setHoveredIndex(realIndex);
+      onHoverItem(realIndex);
+    },
+    [onHoverItem]
+  );
 
   return (
     <div
@@ -243,6 +258,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
                 className={`carousel__item${isHovered ? " carousel__item--active" : ""}`}
                 onMouseEnter={() => handleItemEnter(realIndex)}
                 onMouseLeave={handleItemLeave}
+                onClick={() => handleItemClick(realIndex)}
               >
                 <span className="carousel__item-text">{item.name}</span>
               </span>

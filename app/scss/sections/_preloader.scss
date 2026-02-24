@@ -1,27 +1,95 @@
 @use '../utils/variables' as *;
 
 .preloader {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 9999;
   background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease 3s;
+
+  .pre-tri-left {
+    position: absolute;
+    right: auto;
+    left: -11px;
+    top: 0;
+    height: 19px;
+    width: auto;
+  }
+
+  .pre-tri-right {
+    position: absolute;
+    left: auto;
+    right: -11.5px;
+    top: 0;
+    height: 19px;
+    width: auto;
+    opacity: .15;
+    transition: opacity .1s ease-in-out;
+  }
+
+  .pre-triangle {
+    height: 19px;
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity .5s ease-in-out 0.3s, height 1s ease-in-out .7s;
+  }
+
+  .pre-animation {
+    position: relative;
+    width: 200px;
+    height: 19px;
+    transition: width .5s ease-in-out;
+    overflow: visible;
+    align-items: center;
+    justify-content: center;
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      width: 280px;
+    }
+  }
 
   &--done {
     opacity: 0;
     pointer-events: none;
+
+    .pre-animation,
+    .preloader__bar-track {
+      width: 0;
+    }
+
+    .pre-triangle {
+      opacity: 1;
+      height: 100px;
+    }
+
+    .pre-tri-right {
+      opacity: 1;
+    }
   }
 }
 
 .preloader__bar-track {
   width: 200px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.2);
+  height: 1px;
+  background: rgba(#1f1f1f, 1);
   position: relative;
   overflow: hidden;
+  transition: width .5s ease-in-out;
+
+  &.pre-bar-1 {
+    top: 0px;
+  }
+
+  &.pre-bar-2 {
+    top: 16.5px;
+  }
 
   @media (min-width: map-get($viewport, "tablet")) {
     width: 280px;
@@ -45,19 +113,24 @@
   .site-header {
     top: -60px;
     opacity: 0;
-    transition: top .3s ease-out, opacity .3s ease-out;
+    transition: top 1s ease-out, opacity 1s ease-out;
   }
 
   .carousel {
     bottom: -200px;
     opacity: 0;
-    transition: bottom .3s ease-out, opacity .3s ease-out;
+    transition: bottom 1s ease-out, opacity 1s ease-out;
   }
 
   .site-footer {
     opacity: 0;
     bottom: -200px;
-    transition: bottom .3s ease-out, opacity .3s ease-out;
+    transition: bottom 1s ease-out, opacity 1s ease-out;
+  }
+
+  .gallery__card-area {
+    opacity: 0;
+    transition: opacity 1.5s ease-out 1s;
   }
 }
 
@@ -77,6 +150,9 @@
   .site-footer {
     opacity: 1;
     bottom: 0;
+  }
 
+  .gallery__card-area {
+    opacity: 1;
   }
 }

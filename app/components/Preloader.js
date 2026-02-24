@@ -28,7 +28,7 @@ export default function Preloader({ onComplete }) {
           // Wait for fade-out animation to finish before notifying parent
           setTimeout(() => {
             onComplete();
-          }, 600);
+          }, 3500);
         }, 200);
       }
     };
@@ -43,11 +43,24 @@ export default function Preloader({ onComplete }) {
 
   return (
     <div className={`preloader${done ? " preloader--done" : ""}`}>
-      <div className="preloader__bar-track">
-        <div
-          className="preloader__bar-fill"
-          style={{ transform: `scaleX(${progress})` }}
-        />
+
+      <img className="pre-triangle" src="./preload/triangle.svg" />
+      <div className="pre-animation">
+        <img className="pre-tri-left" src="./preload/tri-left.svg" />
+        <img className="pre-tri-right" src="./preload/tri-right.svg" />
+        <div className="preloader__bar-track pre-bar-1">
+          <div
+            className="preloader__bar-fill"
+            style={{ transform: `scaleX(${progress})` }}
+          />
+        </div>
+
+        <div className="preloader__bar-track pre-bar-2">
+          <div
+            className="preloader__bar-fill"
+            style={{ transform: `scaleX(${progress})` }}
+          />
+        </div>
       </div>
     </div>
   );

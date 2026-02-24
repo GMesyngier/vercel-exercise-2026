@@ -15,16 +15,48 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   const MAX_SPEED = 8;
   const DEADZONE = 0.1;
   const LERP_FACTOR = 0.06;
+  const setsRef = useRef(5);
 
-  const SETS = 5;
+  // Compute how many sets we need to safely fill the widest viewport (3000px)
+  // We need at least: ceil(viewportWidth / singleSetWidth) * 2 + 3 (buffer on both sides + center)
+  const computeSets = useCallback(() => {
+    if (!trackRef.current || items.length === 0) return 5;
 
-  // Repeat items 5x so there's always content on both sides of the viewport
-  const repeatedItems = Array.from({ length: SETS }, () => items).flat();
+    // Measure one item to estimate single set width
+    const firstItem = trackRef.current.querySelector(".carousel__item");
+    if (!firstItem) return 5;
+    const itemWidth = firstItem.getBoundingClientRect().width;
+    const estimatedSetWidth = itemWidth * items.length;
+    const viewportWidth = window.innerWidth;
+
+    if (estimatedSetWidth <= 0) return 5;
+
+    // Need enough sets so that from the center, both sides are fully covered
+    const setsNeeded = Math.ceil(viewportWidth / estimatedSetWidth) * 2 + 3;
+    return Math.max(setsNeeded, 5);
+  }, [items]);
+
+  const [sets, setSets] = useState(5);
+  const repeatedItems = Array.from({ length: sets }, () => items).flat();
 
   // Measure the width of one set of items
   const measureSetWidth = useCallback(() => {
-    if (!trackRef.current) return;
-    singleSetWidthRef.current = trackRef.current.scrollWidth / SETS;
+    if (!trackRef.current || sets === 0) return;
+    singleSetWidthRef.current = trackRef.current.scrollWidth / sets;
+  }, [sets]);
+
+  // Wrap helper: keeps offset in the middle range so both sides have content
+  const wrapOffset = useCallback(() => {
+    const setW = singleSetWidthRef.current;
+    const s = setsRef.current;
+    if (setW <= 0 || s < 5) return;
+
+    // Keep offset in [setW * floor(s/2-1), setW * floor(s/2+1))
+    const lo = setW * Math.floor(s / 2 - 1);
+    const hi = setW * Math.floor(s / 2 + 1);
+
+    while (offsetRef.current >= hi) offsetRef.current -= setW;
+    while (offsetRef.current < lo) offsetRef.current += setW;
   }, []);
 
   // Animation loop using translateX instead of scrollLeft
@@ -40,20 +72,14 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
       offsetRef.current += velocityRef.current;
     }
 
-    // Wrap so offset stays within the middle set range [setW, setW*2)
-    // This keeps 1 full set to the left and 2+ to the right always visible
-    const setW = singleSetWidthRef.current;
-    if (setW > 0) {
-      while (offsetRef.current >= setW * 3) offsetRef.current -= setW;
-      while (offsetRef.current < setW) offsetRef.current += setW;
-    }
+    wrapOffset();
 
     if (trackRef.current) {
       trackRef.current.style.transform = `translateX(${-offsetRef.current}px)`;
     }
 
     rafRef.current = requestAnimationFrame(animate);
-  }, []);
+  }, [wrapOffset]);
 
   // Start animation loop
   useEffect(() => {
@@ -63,47 +89,51 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
     };
   }, [animate]);
 
+  // Recompute sets count on resize
+  useEffect(() => {
+    const handleResize = () => {
+      const needed = computeSets();
+      setSets((prev) => (needed !== prev ? needed : prev));
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [computeSets]);
+
   // Measure on mount, on resize, and when fonts finish loading
   useEffect(() => {
+    setsRef.current = sets;
+
     const doMeasure = () => {
       const oldSetW = singleSetWidthRef.current;
       measureSetWidth();
       const newSetW = singleSetWidthRef.current;
-      // Adjust offset proportionally so the visual position doesn't jump
       if (oldSetW > 0 && newSetW > 0 && oldSetW !== newSetW) {
         offsetRef.current = (offsetRef.current / oldSetW) * newSetW;
       }
-      // Clamp into valid range
-      if (newSetW > 0) {
-        while (offsetRef.current >= newSetW * 3) offsetRef.current -= newSetW;
-        while (offsetRef.current < newSetW) offsetRef.current += newSetW;
-      }
+      wrapOffset();
     };
 
     // Initial measure after layout settles — start in the middle of the track
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         measureSetWidth();
-        offsetRef.current = singleSetWidthRef.current * 2;
+        offsetRef.current = singleSetWidthRef.current * Math.floor(sets / 2);
       });
     });
 
-    // Re-measure when fonts finish loading (padding/text size may change)
     document.fonts.ready.then(doMeasure);
 
-    // ResizeObserver on the track to catch any layout shift
     let ro;
     if (trackRef.current) {
       ro = new ResizeObserver(doMeasure);
       ro.observe(trackRef.current);
     }
 
-    window.addEventListener("resize", doMeasure);
     return () => {
-      window.removeEventListener("resize", doMeasure);
       if (ro) ro.disconnect();
     };
-  }, [items, measureSetWidth]);
+  }, [items, sets, measureSetWidth, wrapOffset]);
 
   const handleMouseMove = useCallback((e) => {
     if (!containerRef.current) return;
@@ -145,11 +175,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
 
     // Apply delta directly to offset for responsive dragging
     offsetRef.current += delta;
-    const setW = singleSetWidthRef.current;
-    if (setW > 0) {
-      while (offsetRef.current >= setW * 3) offsetRef.current -= setW;
-      while (offsetRef.current < setW) offsetRef.current += setW;
-    }
+    wrapOffset();
 
     // Store velocity for inertia on release
     velocityRef.current = delta;

@@ -92,6 +92,44 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
     }
   }, []);
 
+  // --- Touch / swipe support for mobile ---
+  const touchStartXRef = useRef(0);
+  const touchPrevXRef = useRef(0);
+  const isTouchingRef = useRef(false);
+
+  const handleTouchStart = useCallback((e) => {
+    isTouchingRef.current = true;
+    touchStartXRef.current = e.touches[0].clientX;
+    touchPrevXRef.current = e.touches[0].clientX;
+    // Kill any existing inertia
+    targetVelocityRef.current = 0;
+    velocityRef.current = 0;
+  }, []);
+
+  const handleTouchMove = useCallback((e) => {
+    if (!isTouchingRef.current) return;
+    const currentX = e.touches[0].clientX;
+    const delta = touchPrevXRef.current - currentX;
+    touchPrevXRef.current = currentX;
+
+    // Apply delta directly to offset for responsive dragging
+    offsetRef.current += delta;
+    const setW = singleSetWidthRef.current;
+    if (setW > 0) {
+      offsetRef.current = ((offsetRef.current % setW) + setW) % setW;
+    }
+
+    // Store velocity for inertia on release
+    velocityRef.current = delta;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    isTouchingRef.current = false;
+    // Let the existing animation loop handle inertia decay
+    // velocityRef already has the last delta, targetVelocity stays 0
+    // so it will naturally decelerate via the lerp
+  }, []);
+
   const handleMouseLeave = useCallback(() => {
     targetVelocityRef.current = 0;
     setHoveredIndex(-1);
@@ -115,6 +153,9 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Left arrow indicator */}
       <div className="carousel__arrow carousel__arrow--left" aria-hidden="true">

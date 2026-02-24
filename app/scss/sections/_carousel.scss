@@ -1,0 +1,115 @@
+@use '../utils/variables' as *;
+@use '../utils/mixins' as *;
+
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+
+  // Gradient fade bars on both sides
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 5;
+    pointer-events: none;
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      width: 300px;
+    }
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, #000 0%, transparent 100%);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, #000 0%, transparent 100%);
+  }
+
+  &__track {
+    overflow: hidden;
+    width: 100%;
+    height: 180px;
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      height: 220px;
+    }
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      height: 260px;
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    will-change: transform;
+  }
+
+  &__item {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
+    cursor: pointer;
+    padding: 0;
+    border-right: 1px solid map-get($theme-colors, "border");
+
+    &--active .carousel__item-text {
+      color: #fff;
+    }
+  }
+
+  &__item-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: $font-mono;
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: map-get($theme-colors, "text-muted");
+    white-space: nowrap;
+    padding: 12px 6px;
+    @include transition(color 0.15s ease);
+
+    @media (min-width: map-get($viewport, "tablet")) {
+      font-size: 0.85rem;
+      padding: 14px 6px;
+    }
+
+    @media (min-width: map-get($viewport, "desktop")) {
+      font-size: 0.95rem;
+      padding: 16px 6px;
+    }
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    color: map-get($theme-colors, "text-muted");
+    pointer-events: none;
+    opacity: 0.4;
+
+    &--left {
+      left: 0;
+    }
+
+    &--right {
+      right: 0;
+    }
+  }
+}

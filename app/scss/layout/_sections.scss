@@ -1,8 +1,13 @@
 @use '../utils/variables' as *;
 
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .section {
-  margin-top: map-get($spacing , "xs");
-  border-bottom: 1px solid map-get($theme-colors, "gray-dark");
+  margin-top: map-get($spacing, "s");
 
   &:last-child {
     border-bottom: none;

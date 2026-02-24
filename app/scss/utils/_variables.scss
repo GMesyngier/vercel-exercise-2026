@@ -1,9 +1,14 @@
-// Colors
+// Colors — Dark theme (Figma spec)
 
 $theme-colors: (
-  "gray-light": #a1a1a1,
-  "gray-carbon": #666666,
-  "gray-dark": #1f1f1f,
+  "bg": #000000,
+  "bg-card": #0a0a0a,
+  "bg-elevated": #1a1a1a,
+  "text-primary": #ffffff,
+  "text-secondary": #a1a1a1,
+  "text-muted": #666666,
+  "border": #1f1f1f,
+  "border-light": #333333,
 );
 
 
@@ -22,7 +27,8 @@ $title-size: (
   "s" : 1.625rem,
   "m-s" : 2.5rem,
   "m" : 3rem,
-  "l" : 3.75rem
+  "l" : 3.75rem,
+  "xl" : 4.5rem,
 );
 
 $text-size: (
@@ -34,7 +40,7 @@ $text-size: (
 );
 
 
-// Spacing: Matgins & Paddings
+// Spacing
 
 $spacing: (
   "xs" : 1rem,

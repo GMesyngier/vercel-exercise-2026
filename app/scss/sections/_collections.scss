@@ -1,168 +1,118 @@
 @use '../utils/variables' as *;
 @use '../utils/mixins' as *;
+@use '../utils/animations' as *;
 
-.collection {
-  border-top: 1px solid map-get($theme-colors, "gray-dark");
+// --- Gallery layout (single-card + carousel page) ---
 
-  &__header {
-    display: grid;
-    position: relative;
-    height: 120px;
-    border-bottom: 1px solid map-get($theme-colors, "gray-dark");
-    
+.gallery-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-    @media (min-width: map-get($viewport, "tablet")) {
-      height: 160px;
-    }
+.gallery {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 24px;
+  gap: 10rem;
+}
+
+// Featured card area
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-
-  &__header-cell {
-    padding: map-get($spacing, "m") 0;
-    border-right: 1px solid map-get($theme-colors, "gray-dark");
-    height: 160px;
-
-    &:last-child {
-      border-right: none;
-    }
-  }
-
-  &__header-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-family: $font-text;
-    font-weight: 500;
-    font-size: 1.125rem;
-    color: map-get($theme-colors, "gray-light");
-    text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    white-space: nowrap;
-
-    @media (min-width: map-get($viewport, "tablet")) {
-      font-size: 1.5rem;
-    }
-
-    @media (min-width: map-get($viewport, "desktop")) {
-      font-size: 2rem;
-    }
-  }
-
-  // Grid of items
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    position: relative;
-
-    @media (min-width: map-get($viewport, "tablet")) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (min-width: map-get($viewport, "desktop")) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  // Individual grid item
-  &__item {
-    border-bottom: 1px solid map-get($theme-colors, "gray-dark");
-
-    // 2-col layout (tablet)
-    @media (min-width: map-get($viewport, "tablet")) {
-      border-right: 1px solid map-get($theme-colors, "gray-dark");
-
-      &:nth-child(2n) {
-        border-right: none;
-      }
-    }
-
-    // 3-col layout (desktop)
-    @media (min-width: map-get($viewport, "desktop")) {
-      border-right: 1px solid map-get($theme-colors, "gray-dark");
-
-      &:nth-child(2n) {
-        border-right: 1px solid map-get($theme-colors, "gray-dark");
-      }
-
-      &:nth-child(3n) {
-        border-right: none;
-      }
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-// Poster card
-.poster-card {
+.gallery__card-area {
   display: flex;
   flex-direction: column;
-  padding: map-get($spacing, "m");
-  background: rgba(#0a0a0a, 0);
-  transition: background .2s ease-in-out;
+  align-items: center;
+  width: 100%;
+  max-width: 540px;
+}
+
+.gallery__card {
+  width: 100%;
+  background: transparent;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+
+.gallery__card-image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  position: relative;
+}
+
+.gallery__card-img--active {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 1;
+}
 
-  &:hover {
-    background: rgba(#0a0a0a, 1);
-  }
+.gallery__card-img--hidden {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+}
 
-  &__thumbnail {
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
+.gallery__card-info {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  padding: map-get($spacing, "xs") 0 0;
+  animation: card-enter 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
-    &--landscape {
-      aspect-ratio: 16 / 9;
-    }
+.gallery__card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-  }
+.gallery__card-title {
+  font-family: $font-text;
+  font-weight: 500;
+  font-size: map-get($text-size, "m");
+  color: #fff;
+  line-height: 1.4;
+}
 
-  &__footer {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: map-get($spacing, "xs") 0 0;
+.gallery__card-category {
+  font-family: $font-mono;
+  font-weight: 400;
+  font-size: map-get($text-size, "s");
+  color: map-get($theme-colors, "text-muted");
+}
 
-    @media (min-width: map-get($viewport, "tablet")) {
-      padding: map-get($spacing, "s") 0 0;
-    }
-  }
-
-  &__info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  &__title {
-    font-family: $font-text;
-    font-weight: 500;
-    font-size: map-get($text-size, "m");
-    color: #fff;
-    line-height: 1.4;
-  }
-
-  &__category {
-    font-family: $font-mono;
-    font-weight: 400;
-    font-size: map-get($text-size, "s");
-    color: map-get($theme-colors, "gray-carbon");
-  }
-
-  &__actions {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex-shrink: 0;
-  }
+.gallery__card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 // Icon button (reusable)
@@ -172,16 +122,17 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid map-get($theme-colors, "gray-dark");
+  border: 1px solid map-get($theme-colors, "border-light");
   border-radius: 8px;
   background: transparent;
-  color: map-get($theme-colors, "gray-light");
+  color: map-get($theme-colors, "text-secondary");
   cursor: pointer;
-  @include transition(background 0.15s ease, color 0.15s ease);
+  @include transition(background 0.15s ease, color 0.15s ease, border-color 0.15s ease);
 
   &:hover {
-    background: map-get($theme-colors, "gray-dark");
+    background: map-get($theme-colors, "bg-elevated");
     color: #fff;
+    border-color: #fff;
   }
 
   svg {

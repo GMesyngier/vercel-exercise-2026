@@ -11,6 +11,14 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   const rafRef = useRef(null);
   const singleSetWidthRef = useRef(0);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
+  const isTouchDeviceRef = useRef(false);
+
+  // Detect touch device on first touch
+  useEffect(() => {
+    const markTouch = () => { isTouchDeviceRef.current = true; };
+    window.addEventListener("touchstart", markTouch, { once: true, passive: true });
+    return () => window.removeEventListener("touchstart", markTouch);
+  }, []);
 
   const MAX_SPEED = 8;
   const DEADZONE = 0.1;
@@ -136,7 +144,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   }, [items, sets, measureSetWidth, wrapOffset]);
 
   const handleMouseMove = useCallback((e) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || isTouchDeviceRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const centerX = rect.width / 2;
@@ -195,6 +203,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
 
   const handleItemEnter = useCallback(
     (realIndex) => {
+      if (isTouchDeviceRef.current) return;
       setHoveredIndex(realIndex);
       onHoverItem(realIndex);
     },
@@ -202,6 +211,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   );
 
   const handleItemLeave = useCallback(() => {
+    if (isTouchDeviceRef.current) return;
     setHoveredIndex(-1);
   }, []);
 

@@ -63,7 +63,7 @@
   flex-direction: column;
   align-items: center;
 
-  @media (min-width: map-get($viewport, "tablet")) {
+  @media (min-width: map-get($viewport, "tablet")) and (min-height: 1200px) {
     height: auto;
   }
 }

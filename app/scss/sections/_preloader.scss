@@ -121,7 +121,7 @@
   .site-header {
     top: -60px;
     opacity: 0;
-    transition: transform .6s ease-out, opacity .6s ease-out;
+    transition: top .6s ease-out, opacity .6s ease-out;
   }
 
   .carousel {

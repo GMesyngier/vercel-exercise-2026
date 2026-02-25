@@ -28,7 +28,7 @@ export default function Preloader({ onComplete }) {
           // Wait for fade-out animation to finish before notifying parent
           setTimeout(() => {
             onComplete();
-          }, 4000);
+          }, 2300);
         }, 200);
       }
     };

@@ -42,13 +42,15 @@
     width: 100%;
     height: 120px;
     flex-shrink: 0;
+    display: block;
 
     @media (min-width: map-get($viewport, "tablet")) {
       height: 160px;
     }
 
     @media (min-width: map-get($viewport, "desktop")) {
-      height: 260px;
+      display: inline-block;
+      height: fit-content;
       overflow: visible;
     }
   }
@@ -84,7 +86,8 @@
     font-size: 0.75rem;
     color: map-get($theme-colors, "text-secondary");
     white-space: nowrap;
-    padding: 8px 4px;
+    overflow: hidden;
+    text-overflow: ellipsis padding: 8px 4px;
     @include transition(color 0.15s ease);
 
     @media (min-width: map-get($viewport, "tablet")) {

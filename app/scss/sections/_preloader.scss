@@ -1,11 +1,7 @@
 @use '../utils/variables' as *;
 
 .preloader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed;
   inset: 0;
   z-index: 9999;
   background: #000;
@@ -120,21 +116,21 @@
   transition: opacity 0.5s ease 0.1s;
 
   .site-header {
-    top: -60px;
+    transform: translateY(-60px);
     opacity: 0;
-    transition: top 1s ease-out, opacity 1s ease-out;
+    transition: transform 1s ease-out, opacity 1s ease-out;
   }
 
   .carousel {
-    bottom: -200px;
+    transform: translateY(200px);
     opacity: 0;
-    transition: bottom 1s ease-out, opacity 1s ease-out;
+    transition: transform 1s ease-out, opacity 1s ease-out;
   }
 
   .site-footer {
     opacity: 0;
-    bottom: -200px;
-    transition: bottom 1s ease-out, opacity 1s ease-out;
+    transform: translateY(200px);
+    transition: transform 1s ease-out, opacity 1s ease-out;
   }
 
   .gallery__card-area {
@@ -148,17 +144,17 @@
 
   .site-header {
     opacity: 1;
-    top: 0;
+    transform: translateY(0);
   }
 
   .carousel {
     opacity: 1;
-    bottom: 0;
+    transform: translateY(0);
   }
 
   .site-footer {
     opacity: 1;
-    bottom: 0;
+    transform: translateY(0);
   }
 
   .gallery__card-area {

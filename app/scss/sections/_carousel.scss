@@ -94,9 +94,13 @@
 
     @media (min-width: map-get($viewport, "tablet")) {
       font-size: 0.85rem;
+    }
+
+    @media (min-width: map-get($viewport, "desktop")) {
       overflow: visible;
       text-overflow: unset;
       max-height: none;
+
     }
   }
 

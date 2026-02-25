@@ -10,7 +10,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   const targetVelocityRef = useRef(0);
   const rafRef = useRef(null);
   const singleSetWidthRef = useRef(0);
-  const [hoveredIndex, setHoveredIndex] = useState(-1);
+  const [hoveredIndex, setHoveredIndex] = useState(0);
   const isTouchDeviceRef = useRef(false);
 
   // Detect touch device on first touch
@@ -202,7 +202,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
 
   const handleMouseLeave = useCallback(() => {
     targetVelocityRef.current = 0;
-    setHoveredIndex(-1);
+    // Keep hoveredIndex so the selected item stays highlighted
   }, []);
 
   const handleItemEnter = useCallback(
@@ -215,8 +215,7 @@ export default function InfiniteCarousel({ items, onHoverItem }) {
   );
 
   const handleItemLeave = useCallback(() => {
-    if (isTouchDeviceRef.current) return;
-    setHoveredIndex(-1);
+    // No-op: keep the active highlight on the last selected item
   }, []);
 
   // Tap handler for mobile: select item only if the finger didn't swipe

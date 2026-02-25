@@ -43,6 +43,8 @@
     height: 120px;
     flex-shrink: 0;
     display: block;
+    position: relative;
+    z-index: 4;
 
     @media (min-width: map-get($viewport, "tablet")) {
       height: 160px;
